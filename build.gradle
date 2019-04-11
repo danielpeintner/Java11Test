@@ -15,7 +15,6 @@ dependencies {
 	implementation 'org.controlsfx:controlsfx:11.0.0-RC2'
 
 	implementation 'xmlunit:xmlunit:1.6'
-	// implementation 'org.apache.commons:commons-lang3:3.5'
 
     // implementation 'javax.xml.bind:jaxb-api:2.3.1'
     // implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
@@ -44,15 +43,16 @@ run {
     source = fileTree('src/main/resources') { include '*.xsd' }
 } */
 
-mainClassName = "com.example.HelloFX"
+mainClassName = "com.example/com.example.HelloFX"
 
 application {
     applicationDefaultJvmArgs =  [
             "--add-opens=javafx.base/com.sun.javafx.runtime=org.controlsfx.controls",
             "--add-opens=javafx.base/com.sun.javafx.collections=org.controlsfx.controls",
-			"--add-opens=javafx.base/com.sun.javafx.event=ALL-UNNAMED",
-            // "--add-opens=javafx.graphics/com.sun.javafx.css=org.controlsfx.controls",
-			"--add-opens=javafx.graphics/com.sun.javafx.css=ALL-UNNAMED",
+			"--add-opens=javafx.base/com.sun.javafx.event=org.controlsfx.controls",
+            // "--add-opens=javafx.base/com.sun.javafx.event=ALL-UNNAMED",
+            "--add-opens=javafx.graphics/com.sun.javafx.css=org.controlsfx.controls",
+			// "--add-opens=javafx.graphics/com.sun.javafx.css=ALL-UNNAMED",
             "--add-opens=javafx.graphics/com.sun.javafx.scene=org.controlsfx.controls",
             "--add-opens=javafx.graphics/com.sun.javafx.scene.traversal=org.controlsfx.controls",
             "--add-opens=javafx.graphics/javafx.scene=org.controlsfx.controls",
@@ -90,4 +90,3 @@ jlink {
 
 
 apply plugin : 'java'
-/* apply plugin : 'eclipse' */

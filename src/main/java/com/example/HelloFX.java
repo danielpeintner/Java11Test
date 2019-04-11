@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-//import org.controlsfx.control.HyperlinkLabel;
+import org.controlsfx.control.HyperlinkLabel;
 
 public class HelloFX extends Application {
 
@@ -20,7 +20,6 @@ public class HelloFX extends Application {
         Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
         BorderPane bp = new BorderPane();
         bp.setTop(l);
-        /*
         HyperlinkLabel hyperlinkLabel = new HyperlinkLabel("[Link]");
         hyperlinkLabel.setOnAction(event -> {
             Hyperlink link = (Hyperlink)event.getSource();
@@ -34,7 +33,6 @@ public class HelloFX extends Application {
             }
         });
         bp.setCenter(hyperlinkLabel);
-        */
         Scene scene = new Scene(bp, 640, 480);
         stage.setScene(scene);
         stage.show();

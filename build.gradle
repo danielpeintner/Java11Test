@@ -65,7 +65,10 @@ application {
 jlink {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
-        name = 'sliding-puzzle'
+        // name = 'sliding-puzzle'
+        // name = 'com.example/com.example.HelloFX'
+        name = 'hello-fx'
+        jvmArgs = []
         // jvmArgs = ['-Dfxgl.sliding.puzzle.dummy=nothing', '-Dfxgl.sliding.puzzle.title=something']
     }
     jpackage {
@@ -73,6 +76,7 @@ jlink {
         // jpackageHome = '/usr/lib/jvm/jdk13'
 		jpackageHome = 'C:/Program Files/Java/jdk-13'
         def os = org.gradle.internal.os.OperatingSystem.current()
+        jvmArgs = []
         // jvmArgs = ['-Dfxgl.sliding.puzzle.dummy=nothingElse', '-Dfxgl.sliding.puzzle.title=somethingElse']
         if(os.macOsX) {
             installerOptions = [

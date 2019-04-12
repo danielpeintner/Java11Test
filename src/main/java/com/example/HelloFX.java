@@ -68,7 +68,7 @@ public class HelloFX extends Application {
         tableView.getItems().add(new Person("Jane", "Deer"));
 
         // Issue
-        TableFilter<Person> tableFilter = TableFilter.forTableView(tableView).apply();
+        // TableFilter<Person> tableFilter = TableFilter.forTableView(tableView).apply();
 
         return tableView;
     }

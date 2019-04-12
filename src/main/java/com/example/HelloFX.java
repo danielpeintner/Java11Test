@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.jaxb.Project;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,7 +27,9 @@ public class HelloFX extends Application {
             final String str = link == null ? "" : link.getText();
             switch(str) {
                 case "Link":
-                    System.out.println("Link clicked");
+                    Project p = new Project();
+                    p.setInformation("test");
+                    System.out.println("Link clicked: " + p.toString());
                     break;
                 default:
                     break;

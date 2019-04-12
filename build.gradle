@@ -5,7 +5,7 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.7'
     id 'org.beryx.jlink' version '2.9.4'
-    // id 'org.unbroken-dome.xjc' version '1.4.2'
+    id 'org.unbroken-dome.xjc' version '1.4.2'
 }
 
 dependencies {
@@ -16,8 +16,8 @@ dependencies {
 
 	implementation 'xmlunit:xmlunit:1.6'
 
-    // implementation 'javax.xml.bind:jaxb-api:2.3.1'
-    // implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
 
 	// test dependencies
 	testCompile group: 'junit', name: 'junit', version: '4.12'
@@ -39,9 +39,9 @@ run {
     }
 }
 
-/* xjcGenerate {
+xjcGenerate {
     source = fileTree('src/main/resources') { include '*.xsd' }
-} */
+}
 
 mainClassName = "com.example/com.example.HelloFX"
 

@@ -63,12 +63,15 @@ application {
 }
 
 jlink {
+    // runtime image produced by jlink: build\image\bin\hello-fx.bat
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
         // name = 'sliding-puzzle'
         // name = 'com.example/com.example.HelloFX'
         name = 'hello-fx'
-        jvmArgs = []
+        jvmArgs = [
+                "--add-exports", "javafx.base/com.sun.javafx.event=org.controlsfx.controls"
+        ]
         // jvmArgs = ['-Dfxgl.sliding.puzzle.dummy=nothing', '-Dfxgl.sliding.puzzle.title=something']
     }
     jpackage {

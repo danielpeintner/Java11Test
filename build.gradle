@@ -4,7 +4,7 @@
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.7'
-    id 'org.beryx.jlink' version '2.9.4'
+    id 'org.beryx.jlink' version '2.11.2'
     id 'org.unbroken-dome.xjc' version '1.4.2'
 }
 
@@ -12,7 +12,7 @@ dependencies {
 	// implementation 'org.controlsfx:controlsfx:8.40.12'
 	// https://github.com/controlsfx/controlsfx
 	// implementation 'org.controlsfx:controlsfx:9.0.1-SNAPSHOT'
-	implementation 'org.controlsfx:controlsfx:11.0.0-RC2'
+	implementation 'org.controlsfx:controlsfx:11.0.0'
 
 	implementation 'xmlunit:xmlunit:1.6'
 
@@ -25,7 +25,7 @@ dependencies {
 
 repositories {
     mavenCentral()
-	maven {url 'https://oss.sonatype.org/content/repositories/snapshots'}     // This is added for snapshot
+	// maven {url 'https://oss.sonatype.org/content/repositories/snapshots'}     // This is added for snapshot
 }
 
 javafx {
@@ -77,7 +77,7 @@ jlink {
     jpackage {
         // Set the environment property BADASS_JLINK_JPACKAGE_HOME or explicitly configure the below property
         // jpackageHome = '/usr/lib/jvm/jdk13'
-		jpackageHome = 'C:/Program Files/Java/jdk-13'
+		jpackageHome = 'C:/Program Files/Java/jdk-14-jpackage'
         def os = org.gradle.internal.os.OperatingSystem.current()
         jvmArgs = []
         // jvmArgs = ['-Dfxgl.sliding.puzzle.dummy=nothingElse', '-Dfxgl.sliding.puzzle.title=somethingElse']

@@ -48,6 +48,9 @@ xjcGenerate {
     source = fileTree('src/main/resources') { include '*.xsd' }
 }
 
+version = '19.11.26'
+def company = 'My Company'
+
 mainClassName = "com.example/com.example.HelloFX"
 
 application {
@@ -86,16 +89,30 @@ jlink {
         def os = org.gradle.internal.os.OperatingSystem.current()
         jvmArgs = []
         // jvmArgs = ['-Dfxgl.sliding.puzzle.dummy=nothingElse', '-Dfxgl.sliding.puzzle.title=somethingElse']
+        installerOptions = [
+                // '--file-associations', 'src/main/resources/associations.properties',
+                '--app-version', version,
+                '--vendor', company,
+                '--copyright', company,
+        ]
         if(os.macOsX) {
-            installerOptions = [
-                '--mac-sign',
+            installerOptions += [
 /*
+                '--mac-sign',
                 '--mac-signing-key-user-name', System.getenv('SIGNING_KEY_USER_NAME'),
                 '--mac-signing-keychain', System.getenv('SIGNING_KEYCHAIN_PATH')
 */
             ]
         } else if(os.windows) {
-            installerOptions = ['--win-per-user-install', '--win-dir-chooser']
+            // imageOptions = ['--icon', 'src/main/deploy/package/windows/hello.ico']
+            installerOptions += [
+                    '--win-per-user-install',
+                    // , '--win-dir-chooser'
+                    '--win-menu',
+                    '--win-menu-group', company,
+                    '--win-shortcut',
+                    // '--win-upgrade-uuid', '027D194C-359B-11B2-A85C-C5D71105C10C',
+            ]
         }
     }
 }

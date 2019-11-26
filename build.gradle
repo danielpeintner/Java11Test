@@ -6,7 +6,7 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.8'
     id 'org.beryx.jlink' version '2.16.4'
-    // id 'org.unbroken-dome.xjc' version '1.4.2'
+    id 'org.unbroken-dome.xjc' version '1.4.2'
 }
 
 dependencies {
@@ -17,11 +17,11 @@ dependencies {
     implementation ('org.controlsfx:controlsfx:11.0.0-RC2') {
         exclude group: 'org.openjfx', module: '*'
     }
-    
+
 	implementation 'xmlunit:xmlunit:1.6'
 
-    // implementation 'javax.xml.bind:jaxb-api:2.3.1'
-    // implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
 
 	// test dependencies
 	testCompile group: 'junit', name: 'junit', version: '4.12'
@@ -29,7 +29,7 @@ dependencies {
 
 repositories {
     mavenCentral()
-	maven {url 'https://oss.sonatype.org/content/repositories/snapshots'}     // This is added for snapshot
+	// maven {url 'https://oss.sonatype.org/content/repositories/snapshots'}     // This is added for snapshot
 }
 
 javafx {
@@ -44,9 +44,9 @@ run {
     }
 }
 
-/* xjcGenerate {
+xjcGenerate {
     source = fileTree('src/main/resources') { include '*.xsd' }
-} */
+}
 
 mainClassName = "com.example/com.example.HelloFX"
 
@@ -68,18 +68,21 @@ application {
 }
 
 jlink {
+    // runtime image produced by jlink: build\image\bin\hello-fx.bat
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
         // name = 'sliding-puzzle'
         // name = 'com.example/com.example.HelloFX'
         name = 'hello-fx'
-        jvmArgs = []
+        jvmArgs = [
+                "--add-exports", "javafx.base/com.sun.javafx.event=org.controlsfx.controls"
+        ]
         // jvmArgs = ['-Dfxgl.sliding.puzzle.dummy=nothing', '-Dfxgl.sliding.puzzle.title=something']
     }
     jpackage {
         // Set the environment property BADASS_JLINK_JPACKAGE_HOME or explicitly configure the below property
         // jpackageHome = '/usr/lib/jvm/jdk13'
-		jpackageHome = 'C:/Program Files/Java/jdk-13'
+		jpackageHome = 'C:/Program Files/Java/jdk-14-jpackage'
         def os = org.gradle.internal.os.OperatingSystem.current()
         jvmArgs = []
         // jvmArgs = ['-Dfxgl.sliding.puzzle.dummy=nothingElse', '-Dfxgl.sliding.puzzle.title=somethingElse']

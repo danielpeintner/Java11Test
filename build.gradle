@@ -2,9 +2,10 @@
 // set JAVA_HOME=C:\Program Files\Java\jdk-13
 
 plugins {
+    id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.7'
-    id 'org.beryx.jlink' version '2.9.4'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.beryx.jlink' version '2.16.4'
     // id 'org.unbroken-dome.xjc' version '1.4.2'
 }
 
@@ -12,8 +13,11 @@ dependencies {
 	// implementation 'org.controlsfx:controlsfx:8.40.12'
 	// https://github.com/controlsfx/controlsfx
 	// implementation 'org.controlsfx:controlsfx:9.0.1-SNAPSHOT'
-	implementation 'org.controlsfx:controlsfx:11.0.0-RC2'
-
+	// implementation 'org.controlsfx:controlsfx:11.0.0-RC2'
+    implementation ('org.controlsfx:controlsfx:11.0.0-RC2') {
+        exclude group: 'org.openjfx', module: '*'
+    }
+    
 	implementation 'xmlunit:xmlunit:1.6'
 
     // implementation 'javax.xml.bind:jaxb-api:2.3.1'
@@ -29,6 +33,7 @@ repositories {
 }
 
 javafx {
+    version = '13.0.1'
     modules = ['javafx.controls', 'javafx.swing', 'javafx.fxml', 'javafx.media', 'javafx.web']
 }
 

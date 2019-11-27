@@ -1,5 +1,4 @@
-// set JAVA_HOME=C:\Program Files\Java\jdk-11.0.2
-// set JAVA_HOME=C:\Program Files\Java\jdk-13
+// set JAVA_HOME=C:\Program Files\Java\jdk-11.0.5+10
 
 plugins {
     id 'java'
@@ -71,6 +70,13 @@ application {
 }
 
 jlink {
+    // https://github.com/beryx/badass-jlink-plugin/issues/59 -> gradlew suggestMergedModuleInfo
+    /* mergedModule {
+        requires 'java.xml';
+        requires 'java.datatransfer';
+        requires 'java.desktop';
+    } */
+
     // runtime image produced by jlink: build\image\bin\hello-fx.bat
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {

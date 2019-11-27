@@ -5,10 +5,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -20,12 +17,29 @@ public class HelloFX extends Application {
 
     @Override
     public void start(Stage stage) {
+        // Top
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");
         Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
+        // Center
+        TabPane tabPane = new TabPane();
+        tabPane.getTabs().add(getTabControlsFX());
+        // setup
         BorderPane bp = new BorderPane();
-        // Top
         bp.setTop(l);
+        bp.setCenter(tabPane);
+
+        Scene scene = new Scene(bp, 640, 480);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+    Tab getTabControlsFX() {
+        Tab t = new Tab("ControlsFX");
+        BorderPane bp = new BorderPane();
+        t.setContent(bp);
+
         HyperlinkLabel hyperlinkLabel = new HyperlinkLabel("[Link]");
         hyperlinkLabel.setOnAction(event -> {
             Hyperlink link = (Hyperlink)event.getSource();
@@ -45,9 +59,7 @@ public class HelloFX extends Application {
         // Bottom
         bp.setBottom(hyperlinkLabel);
 
-        Scene scene = new Scene(bp, 640, 480);
-        stage.setScene(scene);
-        stage.show();
+        return t;
     }
 
     TableView getTableView() {
@@ -67,7 +79,7 @@ public class HelloFX extends Application {
         tableView.getItems().add(new Person("John", "Doe"));
         tableView.getItems().add(new Person("Jane", "Deer"));
 
-        // Issue
+        // Issue Caused by: java.lang.IllegalArgumentException: Invalid URL: Invalid URL or resource not found
         // TableFilter<Person> tableFilter = TableFilter.forTableView(tableView).apply();
 
         return tableView;

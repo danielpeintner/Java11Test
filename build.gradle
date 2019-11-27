@@ -74,8 +74,11 @@ application {
 
 jlink {
     // https://github.com/beryx/badass-jlink-plugin/issues/59 -> gradlew suggestMergedModuleInfo
+    /*mergedModule {
+        requires "java.xml"
+    }*/
     mergedModule {
-        requires 'java.xml.bind';
+        // requires 'java.xml.bind';
         requires 'java.logging';
         requires 'java.xml';
         requires 'java.desktop';

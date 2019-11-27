@@ -4,19 +4,30 @@ import com.example.jaxb.Project;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 import org.controlsfx.control.HyperlinkLabel;
 import org.controlsfx.control.table.TableFilter;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 public class HelloFX extends Application {
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws Exception {
         // Top
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");
@@ -24,6 +35,8 @@ public class HelloFX extends Application {
         // Center
         TabPane tabPane = new TabPane();
         tabPane.getTabs().add(getTabControlsFX());
+        tabPane.getTabs().add(getTabJAXB());
+        // TODOs: Apache POI, Iconli, Jasperreports, Math EvalEx, icu4j, Prefereneces, Access database/jackcess
         // setup
         BorderPane bp = new BorderPane();
         bp.setTop(l);
@@ -33,6 +46,61 @@ public class HelloFX extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+
+    Tab getTabJAXB() throws JAXBException {
+        Tab t = new Tab("JAXB");
+        FlowPane flow = new FlowPane(Orientation.VERTICAL);
+        t.setContent(flow);
+
+        // marshall
+        {
+            Project p = new Project();
+            p.setInformation("foo");
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            marshal(p, baos);
+
+            flow.getChildren().add(new Label("Marshall: " + new String(baos.toByteArray())));
+        }
+
+        // unmarshall
+        {
+            String s = "<project xmlns='http://www.example.com/jaxb'><information>XXX</information></project>";
+            InputStream is = new ByteArrayInputStream(s.getBytes());
+            Project p = unmarshal(is);
+
+            flow.getChildren().add(new Label("Unmarshall: " + p.toString()));
+        }
+
+        return t;
+    }
+
+    static Class<Project> CLASS = Project.class;
+
+    public static void marshal(Project proj,
+                               OutputStream outputStream) throws JAXBException {
+        String packageName = CLASS.getPackage().getName();
+        JAXBContext jc = JAXBContext.newInstance(packageName);
+        Marshaller m = jc.createMarshaller();
+        // m.setProperty("jaxb.formatted.output", Boolean.TRUE);
+        m.marshal(proj, outputStream);
+    }
+
+    public static Project unmarshal(InputStream inputStream)
+            throws JAXBException {
+        String packageName = CLASS.getPackage().getName();
+        JAXBContext jc = JAXBContext.newInstance(packageName);
+        Unmarshaller u = jc.createUnmarshaller();
+        Object o = u.unmarshal(inputStream);
+        if(o instanceof Project) {
+            return (Project)o;
+        } else {
+            throw new JAXBException("No object of class " + CLASS);
+        }
+    }
+
+
 
 
     Tab getTabControlsFX() {

@@ -4,6 +4,7 @@ open module com.example {
 
     // requires java.xml;
     requires java.xml.bind;
+    requires com.sun.xml.bind;
 
     requires org.controlsfx.controls;
 }

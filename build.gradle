@@ -48,7 +48,7 @@ xjcGenerate {
     source = fileTree('src/main/resources') { include '*.xsd' }
 }
 
-version = '19.11.26'
+version = '19.11.27'
 def company = 'My Company'
 
 mainClassName = "com.example/com.example.HelloFX"
@@ -84,9 +84,12 @@ jlink {
     }
     jpackage {
         // Set the environment property BADASS_JLINK_JPACKAGE_HOME or explicitly configure the below property
-        // jpackageHome = '/usr/lib/jvm/jdk13'
-		jpackageHome = 'C:/Program Files/Java/jdk-14-jpackage'
         def os = org.gradle.internal.os.OperatingSystem.current()
+        if(os.macOsX) {
+            jpackageHome = '/Library/Java/JavaVirtualMachines/jdk-14-jpackage.jdk/Contents/Home'
+        } else if(os.windows) {
+            jpackageHome = 'C:/Program Files/Java/jdk-14-jpackage'
+        }
         jvmArgs = []
         // jvmArgs = ['-Dfxgl.sliding.puzzle.dummy=nothingElse', '-Dfxgl.sliding.puzzle.title=somethingElse']
         installerOptions = [
@@ -96,6 +99,7 @@ jlink {
                 '--copyright', company,
         ]
         if(os.macOsX) {
+            imageOptions = ['--icon', 'src/main/deploy/package/macosx/hello.icns']
             installerOptions += [
 /*
                 '--mac-sign',
@@ -104,7 +108,7 @@ jlink {
 */
             ]
         } else if(os.windows) {
-            // imageOptions = ['--icon', 'src/main/deploy/package/windows/hello.ico']
+            imageOptions = ['--icon', 'src/main/deploy/package/windows/hello.ico']
             installerOptions += [
                     '--win-per-user-install',
                     // , '--win-dir-chooser'

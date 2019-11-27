@@ -28,6 +28,8 @@ dependencies {
 
     implementation 'com.udojava:EvalEx:2.4'
 
+    implementation 'com.ibm.icu:icu4j:65.1'
+
 	// test dependencies
 	testCompile group: 'junit', name: 'junit', version: '4.12'
 }

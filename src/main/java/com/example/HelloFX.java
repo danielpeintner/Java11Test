@@ -1,5 +1,6 @@
 package com.example;
 
+import com.ibm.icu.text.RuleBasedNumberFormat;
 import com.udojava.evalex.Expression;
 
 import com.example.jaxb.Project;
@@ -40,7 +41,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.io.*;
+import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.Locale;
 
 public class HelloFX extends Application {
 
@@ -56,8 +59,8 @@ public class HelloFX extends Application {
         tabPane.getTabs().add(getTabJAXB());
         tabPane.getTabs().add(getTabApachePOI());
         tabPane.getTabs().add(getTabXMLUnit());
-        tabPane.getTabs().add(getTabEvalEx());
-        // TODOs: Iconli, Jasperreports, icu4j, Prefereneces, Access database/jackcess
+        tabPane.getTabs().add(getTabMath());
+        // TODOs: Iconli, Jasperreports, Prefereneces, Access database/jackcess
         // setup
         BorderPane bp = new BorderPane();
         bp.setTop(l);
@@ -68,16 +71,30 @@ public class HelloFX extends Application {
         stage.show();
     }
 
-    Tab getTabEvalEx() throws ParserConfigurationException, IOException, SAXException {
-        Tab t = new Tab("EvalEx");
+    Tab getTabMath() throws ParserConfigurationException, IOException, SAXException {
+        Tab t = new Tab("Math");
         FlowPane flow = new FlowPane(Orientation.VERTICAL);
         t.setContent(flow);
 
-        String exp = "10 + 2 * 10";
-        Expression expression = new Expression(exp);
-        expression.setPrecision(MathContext.DECIMAL64.getPrecision());
+        BigDecimal bd = null;
+        // EvalEx
+        {
+            String exp = "10 + 2 * 10";
+            Expression expression = new Expression(exp);
+            expression.setPrecision(MathContext.DECIMAL64.getPrecision());
+            bd = expression.eval();
 
-        flow.getChildren().add(new Label(exp + " -> " + expression.eval().toPlainString()));
+            flow.getChildren().add(new Label(exp + " -> " + bd.toPlainString()));
+        }
+
+        // icu4j
+        {
+            RuleBasedNumberFormat rbnfDE = new RuleBasedNumberFormat(Locale.GERMAN, RuleBasedNumberFormat.SPELLOUT);
+            RuleBasedNumberFormat rbnfIT = new RuleBasedNumberFormat(Locale.ITALIAN, RuleBasedNumberFormat.SPELLOUT);
+
+            flow.getChildren().add(new Label("DE" + " -> " +rbnfDE.format(bd)));
+            flow.getChildren().add(new Label("IT" + " -> " +rbnfIT.format(bd)));
+        }
 
         return t;
     }

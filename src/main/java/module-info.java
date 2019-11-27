@@ -13,4 +13,5 @@ open module com.example {
     requires poi.ooxml;
     requires java.desktop;
     requires EvalEx;
+    requires com.ibm.icu;
 }

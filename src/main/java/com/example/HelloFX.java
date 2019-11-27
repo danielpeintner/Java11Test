@@ -7,22 +7,29 @@ import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.controlsfx.control.HyperlinkLabel;
 import org.controlsfx.control.table.TableFilter;
+
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCreationHelper;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.awt.*;
+import java.io.*;
 
 public class HelloFX extends Application {
 
@@ -36,6 +43,7 @@ public class HelloFX extends Application {
         TabPane tabPane = new TabPane();
         tabPane.getTabs().add(getTabControlsFX());
         tabPane.getTabs().add(getTabJAXB());
+        tabPane.getTabs().add(getApachePOI());
         // TODOs: Apache POI, Iconli, Jasperreports, Math EvalEx, icu4j, Prefereneces, Access database/jackcess
         // setup
         BorderPane bp = new BorderPane();
@@ -47,6 +55,75 @@ public class HelloFX extends Application {
         stage.show();
     }
 
+
+    Tab getApachePOI() {
+        Tab t = new Tab("Apache POI");
+        FlowPane flow = new FlowPane(Orientation.VERTICAL);
+        t.setContent(flow);
+
+        Button bXSLX = new Button("Create XSLX");
+        flow.getChildren().add(bXSLX);
+
+        bXSLX.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                try {
+                    XSSFWorkbook workbook = new XSSFWorkbook();
+                    XSSFCreationHelper createHelper = workbook.getCreationHelper();
+                    XSSFSheet sheet = workbook.createSheet("Test");
+
+                    File f = File.createTempFile("test", ".xlsx");
+                    workbook.write(new FileOutputStream(f));
+                    workbook.close();
+                    openFile(f);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        Button bDOCX = new Button("Create DOCX");
+        flow.getChildren().add(bDOCX);
+
+        bDOCX.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                try {
+                    XWPFDocument document = new XWPFDocument();
+                    XWPFParagraph paragraph = document.createParagraph();
+                    XWPFRun run = paragraph.createRun();
+                    run.setText("Testikone");
+
+                    File f = File.createTempFile("test", ".docx");
+                    document.write(new FileOutputStream(f));
+                    openFile(f);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        return t;
+    }
+
+    private static void openFile(File f) {
+        try {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
+                new Thread(() -> {
+                    try {
+                        Desktop.getDesktop().open(f);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+            } else {
+                throw new Exception("Error opening file " + f);
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Information Dialog");
+            alert.setContentText("Error opening: " + f);
+            alert.showAndWait();
+        }
+    }
 
     Tab getTabJAXB() throws JAXBException {
         Tab t = new Tab("JAXB");

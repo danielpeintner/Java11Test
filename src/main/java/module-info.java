@@ -7,6 +7,7 @@ open module com.example {
     requires com.sun.xml.bind;
    //  requires jakarta.activation;
     // requires java.datatransfer;
+    requires org.xmlunit;
 
     requires org.controlsfx.controls;
     requires poi.ooxml;

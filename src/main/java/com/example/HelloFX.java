@@ -23,11 +23,19 @@ import org.controlsfx.control.table.TableFilter;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCreationHelper;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import org.xmlunit.builder.*;
+import org.xmlunit.diff.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.io.*;
 
@@ -43,7 +51,8 @@ public class HelloFX extends Application {
         TabPane tabPane = new TabPane();
         tabPane.getTabs().add(getTabControlsFX());
         tabPane.getTabs().add(getTabJAXB());
-        tabPane.getTabs().add(getApachePOI());
+        tabPane.getTabs().add(getTabApachePOI());
+        tabPane.getTabs().add(getTabXMLUnit());
         // TODOs: XMLUnit 2.6, Iconli, Jasperreports, Math EvalEx, icu4j, Prefereneces, Access database/jackcess
         // setup
         BorderPane bp = new BorderPane();
@@ -55,8 +64,39 @@ public class HelloFX extends Application {
         stage.show();
     }
 
+    Tab getTabXMLUnit() throws ParserConfigurationException, IOException, SAXException {
+        Tab t = new Tab("XMLUnit");
+        FlowPane flow = new FlowPane(Orientation.VERTICAL);
+        t.setContent(flow);
 
-    Tab getApachePOI() {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setNamespaceAware(true);
+        DocumentBuilder dBuilder = dbf.newDocumentBuilder();
+
+        {
+            String sc = "<a></a>";
+            String st = "<a></a>";
+            Document docControl = dBuilder.parse(new ByteArrayInputStream(sc.getBytes()));
+            Document docTest = dBuilder.parse(new ByteArrayInputStream(st.getBytes()));
+
+            Diff diff = DiffBuilder.compare(docControl).withTest(docTest).ignoreComments().ignoreWhitespace().withComparisonController(ComparisonControllers.StopWhenDifferent).build();
+            flow.getChildren().add(new Label(diff.hasDifferences() + ": " + sc+ " != " + st));
+        }
+        {
+            String sc = "<a>X</a>";
+            String st = "<a></a>";
+            Document docControl = dBuilder.parse(new ByteArrayInputStream(sc.getBytes()));
+            Document docTest = dBuilder.parse(new ByteArrayInputStream(st.getBytes()));
+
+            Diff diff = DiffBuilder.compare(docControl).withTest(docTest).ignoreComments().ignoreWhitespace().withComparisonController(ComparisonControllers.StopWhenDifferent).build();
+            flow.getChildren().add(new Label(diff.hasDifferences() + ": " + sc+ " != " + st));
+        }
+
+
+        return t;
+    }
+
+    Tab getTabApachePOI() {
         Tab t = new Tab("Apache POI");
         FlowPane flow = new FlowPane(Orientation.VERTICAL);
         t.setContent(flow);

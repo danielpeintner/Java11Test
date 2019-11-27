@@ -1,5 +1,7 @@
 package com.example;
 
+import com.udojava.evalex.Expression;
+
 import com.example.jaxb.Project;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -38,6 +40,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.io.*;
+import java.math.MathContext;
 
 public class HelloFX extends Application {
 
@@ -53,7 +56,8 @@ public class HelloFX extends Application {
         tabPane.getTabs().add(getTabJAXB());
         tabPane.getTabs().add(getTabApachePOI());
         tabPane.getTabs().add(getTabXMLUnit());
-        // TODOs: XMLUnit 2.6, Iconli, Jasperreports, Math EvalEx, icu4j, Prefereneces, Access database/jackcess
+        tabPane.getTabs().add(getTabEvalEx());
+        // TODOs: Iconli, Jasperreports, icu4j, Prefereneces, Access database/jackcess
         // setup
         BorderPane bp = new BorderPane();
         bp.setTop(l);
@@ -63,6 +67,21 @@ public class HelloFX extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+    Tab getTabEvalEx() throws ParserConfigurationException, IOException, SAXException {
+        Tab t = new Tab("EvalEx");
+        FlowPane flow = new FlowPane(Orientation.VERTICAL);
+        t.setContent(flow);
+
+        String exp = "10 + 2 * 10";
+        Expression expression = new Expression(exp);
+        expression.setPrecision(MathContext.DECIMAL64.getPrecision());
+
+        flow.getChildren().add(new Label(exp + " -> " + expression.eval().toPlainString()));
+
+        return t;
+    }
+
 
     Tab getTabXMLUnit() throws ParserConfigurationException, IOException, SAXException {
         Tab t = new Tab("XMLUnit");
@@ -91,7 +110,6 @@ public class HelloFX extends Application {
             Diff diff = DiffBuilder.compare(docControl).withTest(docTest).ignoreComments().ignoreWhitespace().withComparisonController(ComparisonControllers.StopWhenDifferent).build();
             flow.getChildren().add(new Label(diff.hasDifferences() + ": " + sc+ " != " + st));
         }
-
 
         return t;
     }

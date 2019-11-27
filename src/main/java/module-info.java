@@ -12,4 +12,5 @@ open module com.example {
     requires org.controlsfx.controls;
     requires poi.ooxml;
     requires java.desktop;
+    requires EvalEx;
 }

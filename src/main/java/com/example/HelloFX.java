@@ -44,7 +44,7 @@ public class HelloFX extends Application {
         tabPane.getTabs().add(getTabControlsFX());
         tabPane.getTabs().add(getTabJAXB());
         tabPane.getTabs().add(getApachePOI());
-        // TODOs: Apache POI, Iconli, Jasperreports, Math EvalEx, icu4j, Prefereneces, Access database/jackcess
+        // TODOs: XMLUnit 2.6, Iconli, Jasperreports, Math EvalEx, icu4j, Prefereneces, Access database/jackcess
         // setup
         BorderPane bp = new BorderPane();
         bp.setTop(l);

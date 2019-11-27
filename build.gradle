@@ -73,11 +73,17 @@ application {
 
 jlink {
     // https://github.com/beryx/badass-jlink-plugin/issues/59 -> gradlew suggestMergedModuleInfo
-    /* mergedModule {
+    mergedModule {
+        requires 'java.xml.bind';
+        requires 'java.logging';
         requires 'java.xml';
-        requires 'java.datatransfer';
         requires 'java.desktop';
-    } */
+        requires 'java.datatransfer';
+        // needed?
+        requires 'java.xml.crypto';
+        requires 'java.security.jgss';
+        requires 'jdk.javadoc';
+    }
 
     // runtime image produced by jlink: build\image\bin\hello-fx.bat
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']

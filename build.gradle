@@ -24,6 +24,12 @@ dependencies {
     // implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.2'
     // implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
 
+    implementation 'net.sf.jasperreports:jasperreports:6.10.0'
+    implementation 'net.sf.jasperreports:jasperreports-fonts:6.10.0'
+    implementation 'com.lowagie:itext:2.1.7'
+    implementation 'commons-beanutils:commons-beanutils:1.9.3'
+    // implementation 'org.codehaus.groovy:groovy-all:2.4.16'
+
     implementation 'org.apache.poi:poi-ooxml:4.0.1'
 
     implementation 'com.udojava:EvalEx:2.4'
@@ -73,7 +79,21 @@ application {
             "--add-opens=javafx.graphics/javafx.scene=org.controlsfx.controls",
             "--add-opens=javafx.controls/com.sun.javafx.scene.control=org.controlsfx.controls",
             "--add-opens=javafx.controls/com.sun.javafx.scene.control.behavior=org.controlsfx.controls",
-            "--add-opens=javafx.controls/javafx.scene.control.skin=org.controlsfx.controls"
+            "--add-opens=javafx.controls/javafx.scene.control.skin=org.controlsfx.controls",
+            // Jasperreports (allow bean reflection) / Groovy
+            /*
+            "--add-opens=java.base/java.lang=ALL-UNNAMED",
+            "--add-opens=java.base/java.lang=com.example",
+            "--add-opens=java.base/java.lang=jasperreports",
+            "--add-opens=java.base/java.lang=commons.beanutils",
+            "--add-opens=java.base/java.lang.invoke=ALL-UNNAMED",
+            "--add-opens=java.base/java.lang.invoke=com.example",
+            "--add-opens=java.base/java.lang.invoke=jasperreports",
+            "--add-opens=java.base/java.lang.invoke=commons.beanutils",
+            "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
+            "--add-opens=java.base/java.lang.reflect=com.example",
+            "--add-opens=java.base/java.lang.reflect=jasperreports",
+            "--add-opens=java.base/java.lang.reflect=commons.beanutils", */
     ]
 }
 

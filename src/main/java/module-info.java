@@ -10,7 +10,14 @@ open module com.example {
     requires org.xmlunit;
 
     requires org.controlsfx.controls;
+
     requires poi.ooxml;
+    requires jasperreports;
+    requires jasperreports.fonts;
+    requires java.sql;
+    // requires commons.beanutils;
+    // requires groovy.all;
+
     requires java.desktop;
     requires EvalEx;
     requires com.ibm.icu;

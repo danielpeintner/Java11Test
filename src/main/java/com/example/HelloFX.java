@@ -17,6 +17,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -43,7 +46,11 @@ import java.awt.*;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class HelloFX extends Application {
 
@@ -61,6 +68,7 @@ public class HelloFX extends Application {
         tabPane.getTabs().add(getTabApachePOI());
         tabPane.getTabs().add(getTabXMLUnit());
         tabPane.getTabs().add(getTabMath());
+        tabPane.getTabs().add(getTabJasperreports());
         // TODOs: Iconli, Jasperreports, Prefereneces, Access database/jackcess
         // setup
         BorderPane bp = new BorderPane();
@@ -71,6 +79,45 @@ public class HelloFX extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+
+    Tab getTabJasperreports() throws Exception {
+        Tab t = new Tab("Jasperreports");
+        FlowPane flow = new FlowPane(Orientation.VERTICAL);
+        t.setContent(flow);
+
+        Button bPreview = new Button("Preview Smple");
+        flow.getChildren().add(bPreview);
+
+        bPreview.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                try {
+                    final URL url = HelloFX.class.getResource("/jasper_report_template.jrxml");
+                    JasperReport jr = JasperCompileManager.compileReport(url.openStream());
+
+                    ArrayList<DataBean> dataBeanList = new ArrayList<DataBean>();
+
+                    dataBeanList.add(new DataBean("Manisha", "India"));
+                    dataBeanList.add(new DataBean("Dennis Ritchie", "USA"));
+                    dataBeanList.add(new DataBean("V.Anand", "India"));
+                    dataBeanList.add(new DataBean("Shrinath", "California"));
+
+                    JRBeanCollectionDataSource beanColDataSource = new
+                            JRBeanCollectionDataSource(dataBeanList);
+                    Map parameters = new HashMap();
+                    JasperPrint jp = JasperFillManager.fillReport(jr, parameters, beanColDataSource);
+
+                    JasperViewer jv = new JasperViewer(jp); // , false);
+                    jv.setVisible(true);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        return t;
+    }
+
 
     Tab getTabMath() throws ParserConfigurationException, IOException, SAXException {
         Tab t = new Tab("Math");

@@ -55,6 +55,7 @@ public class HelloFX extends Application {
         Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
         // Center
         TabPane tabPane = new TabPane();
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.getTabs().add(getTabControlsFX());
         tabPane.getTabs().add(getTabJAXB());
         tabPane.getTabs().add(getTabApachePOI());

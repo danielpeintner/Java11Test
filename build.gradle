@@ -28,6 +28,11 @@ dependencies {
     implementation 'net.sf.jasperreports:jasperreports-fonts:6.10.0'
     implementation 'com.lowagie:itext:2.1.7'
     implementation 'commons-beanutils:commons-beanutils:1.9.3'
+    implementation 'org.apache.logging.log4j:log4j-core:2.8.2'
+    implementation 'org.apache.logging.log4j:log4j-jcl:2.8.2'
+    implementation group:"com.fasterxml.jackson.core", name:"jackson-core", version:'2.9.9'
+    implementation group:"com.fasterxml.jackson.core", name:"jackson-databind", version:'2.9.9'
+    implementation group:"com.fasterxml.jackson.core", name:"jackson-annotations", version:'2.9.9'
     // implementation 'org.codehaus.groovy:groovy-all:2.4.16'
 
     implementation 'org.apache.poi:poi-ooxml:4.0.1'
@@ -80,6 +85,16 @@ application {
             "--add-opens=javafx.controls/com.sun.javafx.scene.control=org.controlsfx.controls",
             "--add-opens=javafx.controls/com.sun.javafx.scene.control.behavior=org.controlsfx.controls",
             "--add-opens=javafx.controls/javafx.scene.control.skin=org.controlsfx.controls",
+            // Jasperreports (XML parsing or use javax.xml.soap as in JR pom ?)
+            "--add-opens=java.xml/com.sun.org.apache.xerces.internal.impl=ALL-UNNAMED",
+            "--add-opens=java.xml/com.sun.org.apache.xerces.internal.impl=com.example",
+            "--add-opens=java.xml/com.sun.org.apache.xerces.internal.impl=jasperreports",
+            "--add-opens=java.xml/com.sun.org.apache.xerces.internal.parsers=ALL-UNNAMED",
+            "--add-opens=java.xml/com.sun.org.apache.xerces.internal.parsers=com.example",
+            "--add-opens=java.xml/com.sun.org.apache.xerces.internal.parsers=jasperreports",
+            "--add-opens=java.xml/com.sun.org.apache.xerces.internal.jaxp=ALL-UNNAMED",
+            "--add-opens=java.xml/com.sun.org.apache.xerces.internal.jaxp=com.example",
+            "--add-opens=java.xml/com.sun.org.apache.xerces.internal.jaxp=jasperreports",
             // Jasperreports (allow bean reflection) / Groovy
             /*
             "--add-opens=java.base/java.lang=ALL-UNNAMED",
@@ -112,6 +127,11 @@ jlink {
         requires 'java.xml.crypto';
         requires 'java.security.jgss';
         requires 'jdk.javadoc';
+        // Jasperreports
+        requires 'java.sql';
+        requires 'java.scripting';
+        requires 'java.management';
+        // requires 'jasperreports.fonts';
     }
 
     // runtime image produced by jlink: build\image\bin\hello-fx.bat

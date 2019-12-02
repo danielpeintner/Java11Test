@@ -8,6 +8,7 @@ open module com.example {
    //  requires jakarta.activation;
     // requires java.datatransfer;
     requires org.xmlunit;
+    // requires java.logging;
 
     requires org.controlsfx.controls;
 
@@ -17,6 +18,8 @@ open module com.example {
     requires java.sql;
     // requires commons.beanutils;
     // requires groovy.all;
+    // requires java.scripting;
+    // requires java.management;
 
     requires java.desktop;
     requires EvalEx;

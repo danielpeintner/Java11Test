@@ -1,5 +1,6 @@
 package com.example;
 
+@SuppressWarnings("unused")
 public class DataBean {
     private String name;
     private String country;

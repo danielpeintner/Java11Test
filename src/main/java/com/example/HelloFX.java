@@ -5,8 +5,6 @@ import com.udojava.evalex.Expression;
 
 import com.example.jaxb.Project;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -184,21 +182,18 @@ public class HelloFX extends Application {
         Button bXSLX = new Button("Create XSLX");
         flow.getChildren().add(bXSLX);
 
-        bXSLX.setOnAction(new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent e) {
-                try {
-                    XSSFWorkbook workbook = new XSSFWorkbook();
-                    XSSFCreationHelper createHelper = workbook.getCreationHelper();
-                    XSSFSheet sheet = workbook.createSheet("Test");
+        bXSLX.setOnAction(e -> {
+            try {
+                XSSFWorkbook workbook = new XSSFWorkbook();
+                XSSFCreationHelper createHelper = workbook.getCreationHelper();
+                XSSFSheet sheet = workbook.createSheet("Test");
 
-                    File f = File.createTempFile("test", ".xlsx");
-                    workbook.write(new FileOutputStream(f));
-                    workbook.close();
-                    openFile(f);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                File f = File.createTempFile("test", ".xlsx");
+                workbook.write(new FileOutputStream(f));
+                workbook.close();
+                openFile(f);
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         });
 
@@ -322,7 +317,7 @@ public class HelloFX extends Application {
         return t;
     }
 
-    TableView getTableView() {
+    TableView<Person> getTableView() {
         TableView<Person> tableView = new TableView<>();
 
         TableColumn<Person, String> column1 = new TableColumn<>("First Name");

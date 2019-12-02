@@ -25,7 +25,6 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.controlsfx.control.HyperlinkLabel;
-import org.controlsfx.control.table.TableFilter;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCreationHelper;
@@ -81,37 +80,35 @@ public class HelloFX extends Application {
     }
 
 
-    Tab getTabJasperreports() throws Exception {
+    Tab getTabJasperreports() {
         Tab t = new Tab("Jasperreports");
         FlowPane flow = new FlowPane(Orientation.VERTICAL);
         t.setContent(flow);
 
-        Button bPreview = new Button("Preview Smple");
+        Button bPreview = new Button("Preview Sample");
         flow.getChildren().add(bPreview);
 
-        bPreview.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                try {
-                    final URL url = HelloFX.class.getResource("/jasper_report_template.jrxml");
-                    JasperReport jr = JasperCompileManager.compileReport(url.openStream());
+        bPreview.setOnAction(e -> {
+            try {
+                final URL url = HelloFX.class.getResource("/jasper_report_template.jrxml");
+                JasperReport jr = JasperCompileManager.compileReport(url.openStream());
 
-                    ArrayList<DataBean> dataBeanList = new ArrayList<DataBean>();
+                ArrayList<DataBean> dataBeanList = new ArrayList<>();
 
-                    dataBeanList.add(new DataBean("Manisha", "India"));
-                    dataBeanList.add(new DataBean("Dennis Ritchie", "USA"));
-                    dataBeanList.add(new DataBean("V.Anand", "India"));
-                    dataBeanList.add(new DataBean("Shrinath", "California"));
+                dataBeanList.add(new DataBean("Manisha", "India"));
+                dataBeanList.add(new DataBean("Dennis Ritchie", "USA"));
+                dataBeanList.add(new DataBean("V.Anand", "India"));
+                dataBeanList.add(new DataBean("Shrinath", "California"));
 
-                    JRBeanCollectionDataSource beanColDataSource = new
-                            JRBeanCollectionDataSource(dataBeanList);
-                    Map parameters = new HashMap();
-                    JasperPrint jp = JasperFillManager.fillReport(jr, parameters, beanColDataSource);
+                JRBeanCollectionDataSource beanColDataSource = new
+                        JRBeanCollectionDataSource(dataBeanList);
+                Map<String, Object> parameters = new HashMap<>();
+                JasperPrint jp = JasperFillManager.fillReport(jr, parameters, beanColDataSource);
 
-                    JasperViewer jv = new JasperViewer(jp); // , false);
-                    jv.setVisible(true);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                JasperViewer jv = new JasperViewer(jp, false);
+                jv.setVisible(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         });
 
@@ -119,12 +116,12 @@ public class HelloFX extends Application {
     }
 
 
-    Tab getTabMath() throws ParserConfigurationException, IOException, SAXException {
+    Tab getTabMath() {
         Tab t = new Tab("Math");
         FlowPane flow = new FlowPane(Orientation.VERTICAL);
         t.setContent(flow);
 
-        BigDecimal bd = null;
+        BigDecimal bd;
         // EvalEx
         {
             String exp = "10 + 2 * 10";
@@ -187,8 +184,9 @@ public class HelloFX extends Application {
         Button bXSLX = new Button("Create XSLX");
         flow.getChildren().add(bXSLX);
 
-        bXSLX.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
+        bXSLX.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent e) {
                 try {
                     XSSFWorkbook workbook = new XSSFWorkbook();
                     XSSFCreationHelper createHelper = workbook.getCreationHelper();
@@ -207,20 +205,18 @@ public class HelloFX extends Application {
         Button bDOCX = new Button("Create DOCX");
         flow.getChildren().add(bDOCX);
 
-        bDOCX.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                try {
-                    XWPFDocument document = new XWPFDocument();
-                    XWPFParagraph paragraph = document.createParagraph();
-                    XWPFRun run = paragraph.createRun();
-                    run.setText("Testikone");
+        bDOCX.setOnAction(e -> {
+            try {
+                XWPFDocument document = new XWPFDocument();
+                XWPFParagraph paragraph = document.createParagraph();
+                XWPFRun run = paragraph.createRun();
+                run.setText("Testikone");
 
-                    File f = File.createTempFile("test", ".docx");
-                    document.write(new FileOutputStream(f));
-                    openFile(f);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                File f = File.createTempFile("test", ".docx");
+                document.write(new FileOutputStream(f));
+                openFile(f);
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         });
 
@@ -312,14 +308,10 @@ public class HelloFX extends Application {
         hyperlinkLabel.setOnAction(event -> {
             Hyperlink link = (Hyperlink)event.getSource();
             final String str = link == null ? "" : link.getText();
-            switch(str) {
-                case "Link":
-                    Project p = new Project();
-                    p.setInformation("test");
-                    System.out.println("Link clicked: " + p.toString());
-                    break;
-                default:
-                    break;
+            if ("Link".equals(str)) {
+                Project p = new Project();
+                p.setInformation("test");
+                System.out.println("Link clicked: " + p.toString());
             }
         });
         // Center
@@ -331,15 +323,13 @@ public class HelloFX extends Application {
     }
 
     TableView getTableView() {
-        TableView tableView = new TableView();
+        TableView<Person> tableView = new TableView<>();
 
-        TableColumn<String, Person> column1 = new TableColumn<>("First Name");
+        TableColumn<Person, String> column1 = new TableColumn<>("First Name");
         column1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 
-
-        TableColumn<String, Person> column2 = new TableColumn<>("Last Name");
+        TableColumn<Person, String> column2 = new TableColumn<>("Last Name");
         column2.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-
 
         tableView.getColumns().add(column1);
         tableView.getColumns().add(column2);

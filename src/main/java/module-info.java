@@ -1,11 +1,11 @@
 open module com.example {
     requires javafx.controls;
-    requires javafx.fxml;
+    // requires javafx.fxml;
 
     // requires java.xml;
     requires java.xml.bind;
     requires com.sun.xml.bind;
-   //  requires jakarta.activation;
+    //  requires jakarta.activation;
     // requires java.datatransfer;
     requires org.xmlunit;
     // requires java.logging;
@@ -14,7 +14,7 @@ open module com.example {
 
     requires poi.ooxml;
     requires jasperreports;
-    requires jasperreports.fonts;
+    // requires jasperreports.fonts;
     requires java.sql;
     // requires commons.beanutils;
     // requires groovy.all;

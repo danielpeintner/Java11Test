@@ -7,8 +7,8 @@ import org.junit.Test;
 public class HelloFXTest {
 
 	@Test
-	public void test1() throws Exception {
-		assertTrue(1 == 1);
+	public void test1() {
+		assertEquals(1, 1);
 	}
 	
 }

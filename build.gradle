@@ -121,18 +121,18 @@ jlink {
     }*/
     mergedModule {
         // requires 'java.xml.bind';
-        requires 'java.logging';
-        requires 'java.xml';
-        requires 'java.desktop';
-        requires 'java.datatransfer';
+        requires 'java.logging'
+        requires 'java.xml'
+        requires 'java.desktop'
+        requires 'java.datatransfer'
         // needed?
-        requires 'java.xml.crypto';
-        requires 'java.security.jgss';
-        requires 'jdk.javadoc';
+        requires 'java.xml.crypto'
+        requires 'java.security.jgss'
+        requires 'jdk.javadoc'
         // Jasperreports
-        requires 'java.sql';
-        requires 'java.scripting';
-        requires 'java.management';
+        requires 'java.sql'
+        requires 'java.scripting'
+        requires 'java.management'
         // requires 'jasperreports.fonts';
     }
 

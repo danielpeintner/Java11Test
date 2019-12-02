@@ -1,36 +1,35 @@
 package com.example;
 
+import com.example.jaxb.Project;
 import com.ibm.icu.text.RuleBasedNumberFormat;
 import com.udojava.evalex.Expression;
-
-import com.example.jaxb.Project;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
-
-import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.controlsfx.control.HyperlinkLabel;
-
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFCreationHelper;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-
-import org.xmlunit.builder.*;
-import org.xmlunit.diff.*;
+import org.xmlunit.builder.DiffBuilder;
+import org.xmlunit.diff.ComparisonControllers;
+import org.xmlunit.diff.Diff;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -49,6 +48,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class HelloFX extends Application {
 
     @Override
@@ -185,7 +185,7 @@ public class HelloFX extends Application {
         bXSLX.setOnAction(e -> {
             try {
                 XSSFWorkbook workbook = new XSSFWorkbook();
-                XSSFCreationHelper createHelper = workbook.getCreationHelper();
+                // XSSFCreationHelper createHelper = workbook.getCreationHelper();
                 XSSFSheet sheet = workbook.createSheet("Test");
 
                 File f = File.createTempFile("test", ".xlsx");
@@ -267,7 +267,7 @@ public class HelloFX extends Application {
         return t;
     }
 
-    static Class<Project> CLASS = Project.class;
+    static final Class<Project> CLASS = Project.class;
 
     public static void marshal(Project proj,
                                OutputStream outputStream) throws JAXBException {

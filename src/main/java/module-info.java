@@ -16,6 +16,7 @@ open module com.example {
     requires jasperreports;
     // requires jasperreports.fonts;
     requires java.sql;
+    // requires java.xml.soap;
     // requires commons.beanutils;
     // requires groovy.all;
     // requires java.scripting;

@@ -20,16 +20,17 @@ version = '19.12.04'
 def company = 'My Company'
 
 mainClassName = "com.example.hellofx.Launcher"
+applicationName = 'hello-fx'
 
 application {
     // mainClassName = "com.example.hellofx.Launcher"
-    applicationName = 'hellofx'
+    // applicationName = 'hello-fx'
 }
 
 runtime {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     jpackage {
-        imageName = "hello-fx"
+        imageName = applicationName // "hello-fx"
         // Set the environment property BADASS_JLINK_JPACKAGE_HOME or explicitly configure the below property
         def os = org.gradle.internal.os.OperatingSystem.current()
         if(os.macOsX) {

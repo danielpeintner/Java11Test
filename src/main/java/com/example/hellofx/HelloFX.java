@@ -1,5 +1,7 @@
 package com.example.hellofx;
 
+import com.ibm.icu.text.RuleBasedNumberFormat;
+import com.udojava.evalex.Expression;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -19,6 +21,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.Locale;
 
 public class HelloFX extends Application {
 
@@ -35,7 +40,7 @@ public class HelloFX extends Application {
 //        tabPane.getTabs().add(getTabJAXB());
 //        tabPane.getTabs().add(getTabApachePOI());
         tabPane.getTabs().add(getTabXMLUnit());
-//        tabPane.getTabs().add(getTabMath());
+        tabPane.getTabs().add(getTabMath());
 //        tabPane.getTabs().add(getTabJasperreports());
         // TODOs: Iconli, Jasperreports, Prefereneces, Access database/jackcess
         // setup
@@ -85,33 +90,33 @@ public class HelloFX extends Application {
 //    }
 
 
-//    Tab getTabMath() {
-//        Tab t = new Tab("Math");
-//        FlowPane flow = new FlowPane(Orientation.VERTICAL);
-//        t.setContent(flow);
-//
-//        BigDecimal bd;
-//        // EvalEx
-//        {
-//            String exp = "10 + 2 * 10";
-//            Expression expression = new Expression(exp);
-//            expression.setPrecision(MathContext.DECIMAL64.getPrecision());
-//            bd = expression.eval();
-//
-//            flow.getChildren().add(new Label(exp + " -> " + bd.toPlainString()));
-//        }
-//
-//        // icu4j
-//        {
-//            RuleBasedNumberFormat rbnfDE = new RuleBasedNumberFormat(Locale.GERMAN, RuleBasedNumberFormat.SPELLOUT);
-//            RuleBasedNumberFormat rbnfIT = new RuleBasedNumberFormat(Locale.ITALIAN, RuleBasedNumberFormat.SPELLOUT);
-//
-//            flow.getChildren().add(new Label("DE" + " -> " +rbnfDE.format(bd)));
-//            flow.getChildren().add(new Label("IT" + " -> " +rbnfIT.format(bd)));
-//        }
-//
-//        return t;
-//    }
+    Tab getTabMath() {
+        Tab t = new Tab("Math");
+        FlowPane flow = new FlowPane(Orientation.VERTICAL);
+        t.setContent(flow);
+
+        BigDecimal bd;
+        // EvalEx
+        {
+            String exp = "10 + 2 * 10";
+            Expression expression = new Expression(exp);
+            expression.setPrecision(MathContext.DECIMAL64.getPrecision());
+            bd = expression.eval();
+
+            flow.getChildren().add(new Label(exp + " -> " + bd.toPlainString()));
+        }
+
+        // icu4j
+        {
+            RuleBasedNumberFormat rbnfDE = new RuleBasedNumberFormat(Locale.GERMAN, RuleBasedNumberFormat.SPELLOUT);
+            RuleBasedNumberFormat rbnfIT = new RuleBasedNumberFormat(Locale.ITALIAN, RuleBasedNumberFormat.SPELLOUT);
+
+            flow.getChildren().add(new Label("DE" + " -> " +rbnfDE.format(bd)));
+            flow.getChildren().add(new Label("IT" + " -> " +rbnfIT.format(bd)));
+        }
+
+        return t;
+    }
 
 
     Tab getTabXMLUnit() throws ParserConfigurationException, IOException, SAXException {

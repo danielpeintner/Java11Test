@@ -7,6 +7,11 @@ plugins {
 }
 
 dependencies {
+
+    // Math
+    implementation 'com.udojava:EvalEx:2.4'
+    implementation 'com.ibm.icu:icu4j:65.1'
+
     implementation 'org.xmlunit:xmlunit-core:2.6.3'
 
     // test dependencies
@@ -22,7 +27,7 @@ javafx {
     modules = ['javafx.controls']
 }
 
-version = '19.12.04'
+version = '19.12.05'
 def company = 'My Company'
 
 mainClassName = "com.example.hellofx.Launcher"

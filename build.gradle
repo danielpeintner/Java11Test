@@ -4,6 +4,7 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.8'
     id 'org.beryx.runtime' version '1.8.0'
+    id 'org.unbroken-dome.xjc' version '1.4.2'
 }
 
 dependencies {
@@ -15,6 +16,19 @@ dependencies {
     // Apache POI
     implementation 'org.apache.poi:poi-ooxml:4.0.1'
 
+    // Jasperreports
+    implementation 'net.sf.jasperreports:jasperreports:6.10.0'
+    implementation 'net.sf.jasperreports:jasperreports-fonts:6.10.0'
+    implementation ('com.lowagie:itext:2.1.7') {
+        exclude group: 'org.bouncycastle', module: 'bcmail-jdk15on'
+        exclude group: 'org.bouncycastle', module: 'bcpkix-jdk15on'
+    }
+
+    // JAXB
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+
+    // XML Diff
     implementation 'org.xmlunit:xmlunit-core:2.6.3'
 
     // test dependencies
@@ -28,6 +42,10 @@ repositories {
 javafx {
     version = '13.0.1'
     modules = ['javafx.controls']
+}
+
+xjcGenerate {
+    source = fileTree('src/main/resources') { include '*.xsd' }
 }
 
 version = '19.12.05'

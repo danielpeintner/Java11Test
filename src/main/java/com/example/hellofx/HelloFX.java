@@ -1,5 +1,6 @@
 package com.example.hellofx;
 
+import com.example.jaxb.Project;
 import com.ibm.icu.text.RuleBasedNumberFormat;
 import com.udojava.evalex.Expression;
 import javafx.application.Application;
@@ -12,6 +13,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -23,17 +30,22 @@ import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.diff.ComparisonControllers;
 import org.xmlunit.diff.Diff;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class HelloFX extends Application {
 
@@ -47,11 +59,11 @@ public class HelloFX extends Application {
         TabPane tabPane = new TabPane();
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.getTabs().add(getTabControlsFX());
-//        tabPane.getTabs().add(getTabJAXB());
+        tabPane.getTabs().add(getTabJAXB());
         tabPane.getTabs().add(getTabApachePOI());
         tabPane.getTabs().add(getTabXMLUnit());
         tabPane.getTabs().add(getTabMath());
-//        tabPane.getTabs().add(getTabJasperreports());
+        tabPane.getTabs().add(getTabJasperreports());
         // TODOs: Iconli, Jasperreports, Prefereneces, Access database/jackcess
         // setup
         BorderPane bp = new BorderPane();
@@ -64,40 +76,40 @@ public class HelloFX extends Application {
     }
 
 
-//    Tab getTabJasperreports() {
-//        Tab t = new Tab("Jasperreports");
-//        FlowPane flow = new FlowPane(Orientation.VERTICAL);
-//        t.setContent(flow);
-//
-//        Button bPreview = new Button("Preview Sample");
-//        flow.getChildren().add(bPreview);
-//
-//        bPreview.setOnAction(e -> {
-//            try {
-//                final URL url = HelloFX.class.getResource("/jasper_report_template.jrxml");
-//                JasperReport jr = JasperCompileManager.compileReport(url.openStream());
-//
-//                ArrayList<DataBean> dataBeanList = new ArrayList<>();
-//
-//                dataBeanList.add(new DataBean("Manisha", "India"));
-//                dataBeanList.add(new DataBean("Dennis Ritchie", "USA"));
-//                dataBeanList.add(new DataBean("V.Anand", "India"));
-//                dataBeanList.add(new DataBean("Shrinath", "California"));
-//
-//                JRBeanCollectionDataSource beanColDataSource = new
-//                        JRBeanCollectionDataSource(dataBeanList);
-//                Map<String, Object> parameters = new HashMap<>();
-//                JasperPrint jp = JasperFillManager.fillReport(jr, parameters, beanColDataSource);
-//
-//                JasperViewer jv = new JasperViewer(jp, false);
-//                jv.setVisible(true);
-//            } catch (Exception ex) {
-//                ex.printStackTrace();
-//            }
-//        });
-//
-//        return t;
-//    }
+    Tab getTabJasperreports() {
+        Tab t = new Tab("Jasperreports");
+        FlowPane flow = new FlowPane(Orientation.VERTICAL);
+        t.setContent(flow);
+
+        Button bPreview = new Button("Preview Sample");
+        flow.getChildren().add(bPreview);
+
+        bPreview.setOnAction(e -> {
+            try {
+                final URL url = HelloFX.class.getResource("/jasper_report_template.jrxml");
+                JasperReport jr = JasperCompileManager.compileReport(url.openStream());
+
+                ArrayList<DataBean> dataBeanList = new ArrayList<>();
+
+                dataBeanList.add(new DataBean("Manisha", "India"));
+                dataBeanList.add(new DataBean("Dennis Ritchie", "USA"));
+                dataBeanList.add(new DataBean("V.Anand", "India"));
+                dataBeanList.add(new DataBean("Shrinath", "California"));
+
+                JRBeanCollectionDataSource beanColDataSource = new
+                        JRBeanCollectionDataSource(dataBeanList);
+                Map<String, Object> parameters = new HashMap<>();
+                JasperPrint jp = JasperFillManager.fillReport(jr, parameters, beanColDataSource);
+
+                JasperViewer jv = new JasperViewer(jp, false);
+                jv.setVisible(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        return t;
+    }
 
 
     Tab getTabMath() {
@@ -225,57 +237,57 @@ public class HelloFX extends Application {
         }
     }
 
-//    Tab getTabJAXB() throws JAXBException {
-//        Tab t = new Tab("JAXB");
-//        FlowPane flow = new FlowPane(Orientation.VERTICAL);
-//        t.setContent(flow);
-//
-//        // marshall
-//        {
-//            Project p = new Project();
-//            p.setInformation("foo");
-//
-//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            marshal(p, baos);
-//
-//            flow.getChildren().add(new Label("Marshall: " + new String(baos.toByteArray())));
-//        }
-//
-//        // unmarshall
-//        {
-//            String s = "<project xmlns='http://www.example.com/jaxb'><information>XXX</information></project>";
-//            InputStream is = new ByteArrayInputStream(s.getBytes());
-//            Project p = unmarshal(is);
-//
-//            flow.getChildren().add(new Label("Unmarshall: " + p.toString()));
-//        }
-//
-//        return t;
-//    }
+    Tab getTabJAXB() throws JAXBException {
+        Tab t = new Tab("JAXB");
+        FlowPane flow = new FlowPane(Orientation.VERTICAL);
+        t.setContent(flow);
 
-//    static final Class<Project> CLASS = Project.class;
-//
-//    public static void marshal(Project proj,
-//                               OutputStream outputStream) throws JAXBException {
-//        String packageName = CLASS.getPackage().getName();
-//        JAXBContext jc = JAXBContext.newInstance(packageName);
-//        Marshaller m = jc.createMarshaller();
-//        // m.setProperty("jaxb.formatted.output", Boolean.TRUE);
-//        m.marshal(proj, outputStream);
-//    }
-//
-//    public static Project unmarshal(InputStream inputStream)
-//            throws JAXBException {
-//        String packageName = CLASS.getPackage().getName();
-//        JAXBContext jc = JAXBContext.newInstance(packageName);
-//        Unmarshaller u = jc.createUnmarshaller();
-//        Object o = u.unmarshal(inputStream);
-//        if(o instanceof Project) {
-//            return (Project)o;
-//        } else {
-//            throw new JAXBException("No object of class " + CLASS);
-//        }
-//    }
+        // marshall
+        {
+            Project p = new Project();
+            p.setInformation("foo");
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            marshal(p, baos);
+
+            flow.getChildren().add(new Label("Marshall: " + new String(baos.toByteArray())));
+        }
+
+        // unmarshall
+        {
+            String s = "<project xmlns='http://www.example.com/jaxb'><information>XXX</information></project>";
+            InputStream is = new ByteArrayInputStream(s.getBytes());
+            Project p = unmarshal(is);
+
+            flow.getChildren().add(new Label("Unmarshall: " + p.toString()));
+        }
+
+        return t;
+    }
+
+    static final Class<Project> CLASS = Project.class;
+
+    public static void marshal(Project proj,
+                               OutputStream outputStream) throws JAXBException {
+        String packageName = CLASS.getPackage().getName();
+        JAXBContext jc = JAXBContext.newInstance(packageName);
+        Marshaller m = jc.createMarshaller();
+        // m.setProperty("jaxb.formatted.output", Boolean.TRUE);
+        m.marshal(proj, outputStream);
+    }
+
+    public static Project unmarshal(InputStream inputStream)
+            throws JAXBException {
+        String packageName = CLASS.getPackage().getName();
+        JAXBContext jc = JAXBContext.newInstance(packageName);
+        Unmarshaller u = jc.createUnmarshaller();
+        Object o = u.unmarshal(inputStream);
+        if(o instanceof Project) {
+            return (Project)o;
+        } else {
+            throw new JAXBException("No object of class " + CLASS);
+        }
+    }
 
 
 

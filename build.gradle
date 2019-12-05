@@ -8,6 +8,10 @@ plugins {
 }
 
 dependencies {
+    // ControlsFX
+    implementation ('org.controlsfx:controlsfx:11.0.0-RC2') {
+        exclude group: 'org.openjfx', module: '*'
+    }
 
     // Math
     implementation 'com.udojava:EvalEx:2.4'
@@ -57,6 +61,12 @@ applicationName = 'hello-fx'
 application {
     // mainClassName = "com.example.hellofx.Launcher"
     // applicationName = 'hello-fx'
+    applicationDefaultJvmArgs =  [
+            "--add-opens=javafx.base/com.sun.javafx.event=ALL-UNNAMED",
+            "--add-opens=javafx.base/com.sun.javafx.collections=ALL-UNNAMED",
+            "--add-opens=javafx.base/com.sun.javafx.runtime=ALL-UNNAMED",
+            // XXX many more necessary depending on control
+    ]
 }
 
 runtime {

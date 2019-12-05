@@ -24,6 +24,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.controlsfx.control.HyperlinkLabel;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
@@ -297,20 +298,20 @@ public class HelloFX extends Application {
         BorderPane bp = new BorderPane();
         t.setContent(bp);
 
-//        HyperlinkLabel hyperlinkLabel = new HyperlinkLabel("[Link]");
-//        hyperlinkLabel.setOnAction(event -> {
-//            Hyperlink link = (Hyperlink)event.getSource();
-//            final String str = link == null ? "" : link.getText();
-//            if ("Link".equals(str)) {
-//                Project p = new Project();
-//                p.setInformation("test");
-//                System.out.println("Link clicked: " + p.toString());
-//            }
-//        });
+        HyperlinkLabel hyperlinkLabel = new HyperlinkLabel("[Link]");
+        hyperlinkLabel.setOnAction(event -> {
+            Hyperlink link = (Hyperlink)event.getSource();
+            final String str = link == null ? "" : link.getText();
+            if ("Link".equals(str)) {
+                Project p = new Project();
+                p.setInformation("test");
+                System.out.println("Link clicked: " + p.toString());
+            }
+        });
         // Center
         bp.setCenter(getTableView());
         // Bottom
-//        bp.setBottom(hyperlinkLabel);
+        bp.setBottom(hyperlinkLabel);
 
         return t;
     }

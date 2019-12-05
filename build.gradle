@@ -9,7 +9,7 @@ plugins {
 
 dependencies {
     // ControlsFX
-    implementation ('org.controlsfx:controlsfx:11.0.0-RC2') {
+    implementation ('org.controlsfx:controlsfx:11.0.1') {
         exclude group: 'org.openjfx', module: '*'
     }
 
@@ -66,7 +66,12 @@ application {
             "--add-opens=javafx.base/com.sun.javafx.event=ALL-UNNAMED",
             "--add-opens=javafx.base/com.sun.javafx.collections=ALL-UNNAMED",
             "--add-opens=javafx.base/com.sun.javafx.runtime=ALL-UNNAMED",
-            // XXX many more necessary depending on control
+            "--add-opens=javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED",
+            "--add-opens=javafx.graphics/com.sun.javafx.scene.traversal=ALL-UNNAMED",
+            "--add-opens=javafx.graphics/javafx.scene=ALL-UNNAMED",
+            // "--add-opens=javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED",
+            // "--add-opens=javafx.controls/com.sun.javafx.scene.control.behavior=ALL-UNNAMED",
+            // "--add-opens=javafx.controls/javafx.scene.control.skin=ALL-UNNAMED",
 
             // necessary for Jasperreports XML parsing
             // https://github.com/TIBCOSoftware/jasperreports/issues/61

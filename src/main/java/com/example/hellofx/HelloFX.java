@@ -25,6 +25,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.controlsfx.control.HyperlinkLabel;
+import org.controlsfx.control.table.TableFilter;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
@@ -305,7 +306,11 @@ public class HelloFX extends Application {
             if ("Link".equals(str)) {
                 Project p = new Project();
                 p.setInformation("test");
-                System.out.println("Link clicked: " + p.toString());
+                // System.out.println("Link clicked: " + p.toString());
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Link clicked: " + p.toString());
+                alert.showAndWait();
             }
         });
         // Center
@@ -331,8 +336,8 @@ public class HelloFX extends Application {
         tableView.getItems().add(new Person("John", "Doe"));
         tableView.getItems().add(new Person("Jane", "Deer"));
 
-        // Issue Caused by: java.lang.IllegalArgumentException: Invalid URL: Invalid URL or resource not found
-        // TableFilter<Person> tableFilter = TableFilter.forTableView(tableView).apply();
+        // add table filter
+        TableFilter<Person> tableFilter = TableFilter.forTableView(tableView).apply();
 
         return tableView;
     }

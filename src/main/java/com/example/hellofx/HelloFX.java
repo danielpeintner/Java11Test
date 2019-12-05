@@ -6,10 +6,17 @@ import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
@@ -19,7 +26,10 @@ import org.xmlunit.diff.Diff;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -38,7 +48,7 @@ public class HelloFX extends Application {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.getTabs().add(getTabControlsFX());
 //        tabPane.getTabs().add(getTabJAXB());
-//        tabPane.getTabs().add(getTabApachePOI());
+        tabPane.getTabs().add(getTabApachePOI());
         tabPane.getTabs().add(getTabXMLUnit());
         tabPane.getTabs().add(getTabMath());
 //        tabPane.getTabs().add(getTabJasperreports());
@@ -150,70 +160,70 @@ public class HelloFX extends Application {
         return t;
     }
 
-//    Tab getTabApachePOI() {
-//        Tab t = new Tab("Apache POI");
-//        FlowPane flow = new FlowPane(Orientation.VERTICAL);
-//        t.setContent(flow);
-//
-//        Button bXSLX = new Button("Create XSLX");
-//        flow.getChildren().add(bXSLX);
-//
-//        bXSLX.setOnAction(e -> {
-//            try {
-//                XSSFWorkbook workbook = new XSSFWorkbook();
-//                // XSSFCreationHelper createHelper = workbook.getCreationHelper();
-//                XSSFSheet sheet = workbook.createSheet("Test");
-//
-//                File f = File.createTempFile("test", ".xlsx");
-//                workbook.write(new FileOutputStream(f));
-//                workbook.close();
-//                openFile(f);
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//        });
-//
-//        Button bDOCX = new Button("Create DOCX");
-//        flow.getChildren().add(bDOCX);
-//
-//        bDOCX.setOnAction(e -> {
-//            try {
-//                XWPFDocument document = new XWPFDocument();
-//                XWPFParagraph paragraph = document.createParagraph();
-//                XWPFRun run = paragraph.createRun();
-//                run.setText("Testikone");
-//
-//                File f = File.createTempFile("test", ".docx");
-//                document.write(new FileOutputStream(f));
-//                openFile(f);
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//        });
-//
-//        return t;
-//    }
+    Tab getTabApachePOI() {
+        Tab t = new Tab("Apache POI");
+        FlowPane flow = new FlowPane(Orientation.VERTICAL);
+        t.setContent(flow);
 
-//    private static void openFile(File f) {
-//        try {
-//            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
-//                new Thread(() -> {
-//                    try {
-//                        Desktop.getDesktop().open(f);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }).start();
-//            } else {
-//                throw new Exception("Error opening file " + f);
-//            }
-//        } catch (Exception e) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Information Dialog");
-//            alert.setContentText("Error opening: " + f);
-//            alert.showAndWait();
-//        }
-//    }
+        Button bXSLX = new Button("Create XSLX");
+        flow.getChildren().add(bXSLX);
+
+        bXSLX.setOnAction(e -> {
+            try {
+                XSSFWorkbook workbook = new XSSFWorkbook();
+                // XSSFCreationHelper createHelper = workbook.getCreationHelper();
+                XSSFSheet sheet = workbook.createSheet("Test");
+
+                File f = File.createTempFile("test", ".xlsx");
+                workbook.write(new FileOutputStream(f));
+                workbook.close();
+                openFile(f);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        Button bDOCX = new Button("Create DOCX");
+        flow.getChildren().add(bDOCX);
+
+        bDOCX.setOnAction(e -> {
+            try {
+                XWPFDocument document = new XWPFDocument();
+                XWPFParagraph paragraph = document.createParagraph();
+                XWPFRun run = paragraph.createRun();
+                run.setText("Testikone");
+
+                File f = File.createTempFile("test", ".docx");
+                document.write(new FileOutputStream(f));
+                openFile(f);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        return t;
+    }
+
+    private static void openFile(File f) {
+        try {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
+                new Thread(() -> {
+                    try {
+                        Desktop.getDesktop().open(f);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+            } else {
+                throw new Exception("Error opening file " + f);
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Information Dialog");
+            alert.setContentText("Error opening: " + f);
+            alert.showAndWait();
+        }
+    }
 
 //    Tab getTabJAXB() throws JAXBException {
 //        Tab t = new Tab("JAXB");

@@ -12,6 +12,9 @@ dependencies {
     implementation 'com.udojava:EvalEx:2.4'
     implementation 'com.ibm.icu:icu4j:65.1'
 
+    // Apache POI
+    implementation 'org.apache.poi:poi-ooxml:4.0.1'
+
     implementation 'org.xmlunit:xmlunit-core:2.6.3'
 
     // test dependencies

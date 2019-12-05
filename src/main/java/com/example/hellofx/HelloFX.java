@@ -1,11 +1,24 @@
 package com.example.hellofx;
 
 import javafx.application.Application;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+import org.xmlunit.builder.DiffBuilder;
+import org.xmlunit.diff.ComparisonControllers;
+import org.xmlunit.diff.Diff;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 public class HelloFX extends Application {
 
@@ -21,7 +34,7 @@ public class HelloFX extends Application {
         tabPane.getTabs().add(getTabControlsFX());
 //        tabPane.getTabs().add(getTabJAXB());
 //        tabPane.getTabs().add(getTabApachePOI());
-//        tabPane.getTabs().add(getTabXMLUnit());
+        tabPane.getTabs().add(getTabXMLUnit());
 //        tabPane.getTabs().add(getTabMath());
 //        tabPane.getTabs().add(getTabJasperreports());
         // TODOs: Iconli, Jasperreports, Prefereneces, Access database/jackcess
@@ -101,36 +114,36 @@ public class HelloFX extends Application {
 //    }
 
 
-//    Tab getTabXMLUnit() throws ParserConfigurationException, IOException, SAXException {
-//        Tab t = new Tab("XMLUnit");
-//        FlowPane flow = new FlowPane(Orientation.VERTICAL);
-//        t.setContent(flow);
-//
-//        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-//        dbf.setNamespaceAware(true);
-//        DocumentBuilder dBuilder = dbf.newDocumentBuilder();
-//
-//        {
-//            String sc = "<a></a>";
-//            String st = "<a></a>";
-//            Document docControl = dBuilder.parse(new ByteArrayInputStream(sc.getBytes()));
-//            Document docTest = dBuilder.parse(new ByteArrayInputStream(st.getBytes()));
-//
-//            Diff diff = DiffBuilder.compare(docControl).withTest(docTest).ignoreComments().ignoreWhitespace().withComparisonController(ComparisonControllers.StopWhenDifferent).build();
-//            flow.getChildren().add(new Label(diff.hasDifferences() + ": " + sc+ " != " + st));
-//        }
-//        {
-//            String sc = "<a>X</a>";
-//            String st = "<a></a>";
-//            Document docControl = dBuilder.parse(new ByteArrayInputStream(sc.getBytes()));
-//            Document docTest = dBuilder.parse(new ByteArrayInputStream(st.getBytes()));
-//
-//            Diff diff = DiffBuilder.compare(docControl).withTest(docTest).ignoreComments().ignoreWhitespace().withComparisonController(ComparisonControllers.StopWhenDifferent).build();
-//            flow.getChildren().add(new Label(diff.hasDifferences() + ": " + sc+ " != " + st));
-//        }
-//
-//        return t;
-//    }
+    Tab getTabXMLUnit() throws ParserConfigurationException, IOException, SAXException {
+        Tab t = new Tab("XMLUnit");
+        FlowPane flow = new FlowPane(Orientation.VERTICAL);
+        t.setContent(flow);
+
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setNamespaceAware(true);
+        DocumentBuilder dBuilder = dbf.newDocumentBuilder();
+
+        {
+            String sc = "<a></a>";
+            String st = "<a></a>";
+            Document docControl = dBuilder.parse(new ByteArrayInputStream(sc.getBytes()));
+            Document docTest = dBuilder.parse(new ByteArrayInputStream(st.getBytes()));
+
+            Diff diff = DiffBuilder.compare(docControl).withTest(docTest).ignoreComments().ignoreWhitespace().withComparisonController(ComparisonControllers.StopWhenDifferent).build();
+            flow.getChildren().add(new Label(diff.hasDifferences() + ": " + sc+ " != " + st));
+        }
+        {
+            String sc = "<a>X</a>";
+            String st = "<a></a>";
+            Document docControl = dBuilder.parse(new ByteArrayInputStream(sc.getBytes()));
+            Document docTest = dBuilder.parse(new ByteArrayInputStream(st.getBytes()));
+
+            Diff diff = DiffBuilder.compare(docControl).withTest(docTest).ignoreComments().ignoreWhitespace().withComparisonController(ComparisonControllers.StopWhenDifferent).build();
+            flow.getChildren().add(new Label(diff.hasDifferences() + ": " + sc+ " != " + st));
+        }
+
+        return t;
+    }
 
 //    Tab getTabApachePOI() {
 //        Tab t = new Tab("Apache POI");

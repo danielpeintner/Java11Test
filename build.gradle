@@ -6,6 +6,10 @@ plugins {
     id 'org.beryx.runtime' version '1.8.0'
 }
 
+dependencies {
+    // test dependencies
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
 
 repositories {
     mavenCentral()

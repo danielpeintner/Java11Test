@@ -2,14 +2,14 @@
 
 plugins {
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.8'
-    id 'org.beryx.runtime' version '1.8.0'
-    id 'org.unbroken-dome.xjc' version '1.4.2'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+    id 'org.beryx.runtime' version '1.11.6'
+    id 'org.unbroken-dome.xjc' version '1.4.3'
 }
 
 dependencies {
     // ControlsFX
-    implementation ('org.controlsfx:controlsfx:11.0.1') {
+    implementation ('org.controlsfx:controlsfx:11.0.3') {
         exclude group: 'org.openjfx', module: '*'
     }
 
@@ -21,22 +21,27 @@ dependencies {
     implementation 'org.apache.poi:poi-ooxml:4.0.1'
 
     // Jasperreports
-    implementation 'net.sf.jasperreports:jasperreports:6.10.0'
-    implementation 'net.sf.jasperreports:jasperreports-fonts:6.10.0'
+    implementation 'net.sf.jasperreports:jasperreports:6.16.0'
+    implementation 'net.sf.jasperreports:jasperreports-fonts:6.16.0'
     implementation ('com.lowagie:itext:2.1.7') {
-        exclude group: 'org.bouncycastle', module: 'bcmail-jdk15on'
-        exclude group: 'org.bouncycastle', module: 'bcpkix-jdk15on'
+        // exclude group: 'org.bouncycastle', module: 'bcmail-jdk15on'
+        // exclude group: 'org.bouncycastle', module: 'bcpkix-jdk15on'
     }
 
     // JAXB
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'
-    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+    // implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    // implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
 
     // XML Diff
-    implementation 'org.xmlunit:xmlunit-core:2.6.3'
+    // implementation 'org.xmlunit:xmlunit-core:2.6.3'
+    // Note: XML Unit 2.8+ contains all necessary JAXB/Jakarta dependencies
+    // see https://github.com/xmlunit/xmlunit/releases/tag/v2.8.0
+    implementation 'org.xmlunit:xmlunit-core:2.8.1'
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.3' // javax.xml.bind.annotation
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.3'
 
     // test dependencies
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'junit', name: 'junit', version: '4.13'
 }
 
 repositories {
@@ -44,7 +49,7 @@ repositories {
 }
 
 javafx {
-    version = '13.0.1'
+    version = '16-ea+5' // '14.0.2.1'
     modules = ['javafx.controls']
 }
 
@@ -52,7 +57,7 @@ xjcGenerate {
     source = fileTree('src/main/resources') { include '*.xsd' }
 }
 
-version = '19.12.05'
+version = '20.12.15'
 def company = 'My Company'
 
 mainClassName = "com.example.hellofx.Launcher"
@@ -72,6 +77,7 @@ application {
             // "--add-opens=javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED",
             // "--add-opens=javafx.controls/com.sun.javafx.scene.control.behavior=ALL-UNNAMED",
             // "--add-opens=javafx.controls/javafx.scene.control.skin=ALL-UNNAMED",
+            "--add-opens=javafx.controls/javafx.scene.control.skin=ALL-UNNAMED",
 
             // necessary for Jasperreports XML parsing
             // https://github.com/TIBCOSoftware/jasperreports/issues/61
@@ -89,7 +95,7 @@ runtime {
         if(os.macOsX) {
             jpackageHome = '/Library/Java/JavaVirtualMachines/jdk-14-jpackage.jdk/Contents/Home'
         } else if(os.windows) {
-            jpackageHome = 'C:/Program Files/Java/jdk-14-jpackage'
+            jpackageHome = 'C:/Program Files/Java/jdk-16-ea+28'
         }
         jvmArgs = []
         // jvmArgs = ['-Dfxgl.sliding.puzzle.dummy=nothingElse', '-Dfxgl.sliding.puzzle.title=somethingElse']

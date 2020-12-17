@@ -2,9 +2,17 @@ open module com.example {
     requires javafx.controls;
     // requires javafx.fxml;
 
+    // requires transitive jakarta.activation;
+
     // requires java.xml;
-    requires java.xml.bind;
-    requires com.sun.xml.bind;
+    // requires java.xml.bind;
+    // requires jakarta.activation;
+    // requires java.activation;
+    requires jakarta.activation;
+    requires jakarta.xml.bind;
+    // requires org.glassfish.jaxb.runtime;
+    // requires org.glassfish.jaxb.runtime;
+    // requires com.sun.xml.bind;
     //  requires jakarta.activation;
     // requires java.datatransfer;
     requires org.xmlunit;

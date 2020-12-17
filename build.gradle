@@ -3,9 +3,10 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.8'
-    id 'org.beryx.jlink' version '2.16.4'
-    id 'org.unbroken-dome.xjc' version '1.4.2'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+    id 'org.beryx.jlink' version '2.22.4'
+    // id 'org.unbroken-dome.xjc' version '1.4.3'
+    id 'org.unbroken-dome.xjc' version '2.0.0' // https://github.com/unbroken-dome/gradle-xjc-plugin
 }
 
 dependencies {
@@ -13,19 +14,32 @@ dependencies {
 	// https://github.com/controlsfx/controlsfx
 	// implementation 'org.controlsfx:controlsfx:9.0.1-SNAPSHOT'
 	// implementation 'org.controlsfx:controlsfx:11.0.0-RC2'
-    implementation ('org.controlsfx:controlsfx:11.0.0-RC2') {
+    implementation ('org.controlsfx:controlsfx:11.0.3') {
         exclude group: 'org.openjfx', module: '*'
     }
 
-	implementation 'org.xmlunit:xmlunit-core:2.6.3'
+	// implementation 'org.xmlunit:xmlunit-core:2.6.3'
 
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'
-    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+    // XML diff
+    // Note: XML Unit 2.8+ contains all necessary JAXB/Jakarta dependencies
+    // see https://github.com/xmlunit/xmlunit/releases/tag/v2.8.0
+    implementation 'org.xmlunit:xmlunit-core:2.8.1'
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.0' // https://eclipse-ee4j.github.io/jaxb-ri/
+    implementation 'com.sun.xml.bind:jaxb-impl:3.0.0'
+    // implementation 'javax.xml.bind:jaxb-api:2.3.0'
+    // implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.0'
+    // implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.3' // javax.xml.bind.annotation
+    // implementation 'jakarta.activation:jakarta.activation-api:1.2.2'
+    // compile group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '3.0.0'
+    // implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.3'
+
+    // implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    // implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
     // implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.2'
     // implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
 
-    implementation 'net.sf.jasperreports:jasperreports:6.10.0'
-    implementation 'net.sf.jasperreports:jasperreports-fonts:6.10.0'
+    implementation 'net.sf.jasperreports:jasperreports:6.16.0'
+    implementation 'net.sf.jasperreports:jasperreports-fonts:6.16.0'
     implementation 'commons-beanutils:commons-beanutils:1.9.3'
     implementation 'commons-digester:commons-digester:2.1'
     implementation 'commons-logging:commons-logging:1.1.1'
@@ -35,8 +49,8 @@ dependencies {
         exclude group: 'javax.transaction', module: 'jta'
     }*/
     implementation ('com.lowagie:itext:2.1.7') {
-        exclude group: 'org.bouncycastle', module: 'bcmail-jdk15on'
-        exclude group: 'org.bouncycastle', module: 'bcpkix-jdk15on'
+        // exclude group: 'org.bouncycastle', module: 'bcmail-jdk15on'
+        // exclude group: 'org.bouncycastle', module: 'bcpkix-jdk15on'
     }
     /* implementation 'com.adobe.xmp:xmpcore:5.1.3' */
     implementation ('org.jfree:jcommon:1.0.23') {
@@ -74,7 +88,7 @@ dependencies {
     implementation 'com.ibm.icu:icu4j:65.1'
 
 	// test dependencies
-	testCompile group: 'junit', name: 'junit', version: '4.12'
+	testCompile group: 'junit', name: 'junit', version: '4.13'
 }
 
 repositories {
@@ -83,7 +97,8 @@ repositories {
 }
 
 javafx {
-    version = '13.0.1'
+    version = '16-ea+5' // '14.0.2.1'
+    // version = '13.0.1'
     modules = ['javafx.controls', 'javafx.swing', 'javafx.fxml', 'javafx.media', 'javafx.web']
 }
 
@@ -94,11 +109,15 @@ run {
     }
 }
 
-xjcGenerate {
-    source = fileTree('src/main/resources') { include '*.xsd' }
+// xjcGenerate
+xjc {
+    // default: src/main/schema
+    // source = fileTree('src/main/resources') { include '*.xsd' }
+    // srcDirName = 'src/main/resources'
+    xjcVersion = '3.0'
 }
 
-version = '19.11.27'
+version = '20.12.17'
 def company = 'My Company'
 
 mainClassName = "com.example/com.example.HelloFX"
@@ -149,7 +168,7 @@ jlink {
     /*mergedModule {
         requires "java.xml"
     }*/
-    mergedModule {
+    /* mergedModule {
         // requires 'java.xml.bind';
         requires 'java.logging'
         requires 'java.xml'
@@ -169,7 +188,7 @@ jlink {
         // uses 'java.nio.file.spi.FileSystemProvider'
         // requires 'jasperreports.fonts';
         // requires 'java.xml.soap'
-    }
+    } */
 
     // runtime image produced by jlink: build\image\bin\hello-fx.bat
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
@@ -188,7 +207,7 @@ jlink {
         if(os.macOsX) {
             jpackageHome = '/Library/Java/JavaVirtualMachines/jdk-14-jpackage.jdk/Contents/Home'
         } else if(os.windows) {
-            jpackageHome = 'C:/Program Files/Java/jdk-14-jpackage'
+            jpackageHome = 'C:/Program Files/Java/jdk-16-ea+28'
         }
         jvmArgs = []
         // jvmArgs = ['-Dfxgl.sliding.puzzle.dummy=nothingElse', '-Dfxgl.sliding.puzzle.title=somethingElse']
@@ -220,6 +239,5 @@ jlink {
         }
     }
 }
-
 
 apply plugin : 'java'

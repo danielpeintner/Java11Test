@@ -1,10 +1,12 @@
 // set JAVA_HOME=C:\Program Files\Java\jdk-11.0.5+10
+// set JAVA_HOME=C:\Program Files\Java\jdk-16+36
 
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.9'
-    id 'org.beryx.runtime' version '1.11.6'
-    id 'org.unbroken-dome.xjc' version '1.4.3'
+    id 'org.beryx.runtime' version '1.12.2'
+    // id 'org.unbroken-dome.xjc' version '1.4.3'
+    id 'org.unbroken-dome.xjc' version '2.0.0' // https://github.com/unbroken-dome/gradle-xjc-plugin
 }
 
 dependencies {
@@ -41,7 +43,7 @@ dependencies {
     implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.3'
 
     // test dependencies
-    testCompile group: 'junit', name: 'junit', version: '4.13'
+    testImplementation group: 'junit', name: 'junit', version: '4.13'
 }
 
 repositories {
@@ -53,8 +55,11 @@ javafx {
     modules = ['javafx.controls']
 }
 
-xjcGenerate {
+/* xjcGenerate {
     source = fileTree('src/main/resources') { include '*.xsd' }
+} */
+xjc {
+    // srcDirName = 'src/main/resources'
 }
 
 version = '21.04.09'
@@ -92,11 +97,11 @@ runtime {
         installerName = applicationName
         // Set the environment property BADASS_JLINK_JPACKAGE_HOME or explicitly configure the below property
         def os = org.gradle.internal.os.OperatingSystem.current()
-        if(os.macOsX) {
+        /* if(os.macOsX) {
             jpackageHome = '/Library/Java/JavaVirtualMachines/jdk-14-jpackage.jdk/Contents/Home'
         } else if(os.windows) {
             jpackageHome = 'C:/Program Files/Java/jdk-16-ea+28'
-        }
+        } */
         jvmArgs = []
         // jvmArgs = ['-Dfxgl.sliding.puzzle.dummy=nothingElse', '-Dfxgl.sliding.puzzle.title=somethingElse']
         installerOptions = [

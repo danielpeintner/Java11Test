@@ -9,7 +9,7 @@ plugins {
 
 dependencies {
     // ControlsFX
-    implementation ('org.controlsfx:controlsfx:11.0.3') {
+    implementation ('org.controlsfx:controlsfx:11.1.0') {
         exclude group: 'org.openjfx', module: '*'
     }
 
@@ -49,7 +49,7 @@ repositories {
 }
 
 javafx {
-    version = '16-ea+5' // '14.0.2.1'
+    version = '16' // '14.0.2.1'
     modules = ['javafx.controls']
 }
 
@@ -57,7 +57,7 @@ xjcGenerate {
     source = fileTree('src/main/resources') { include '*.xsd' }
 }
 
-version = '20.12.15'
+version = '21.04.09'
 def company = 'My Company'
 
 mainClassName = "com.example.hellofx.Launcher"

@@ -14,7 +14,7 @@ dependencies {
 	// https://github.com/controlsfx/controlsfx
 	// implementation 'org.controlsfx:controlsfx:9.0.1-SNAPSHOT'
 	// implementation 'org.controlsfx:controlsfx:11.0.0-RC2'
-    implementation ('org.controlsfx:controlsfx:11.0.3') {
+    implementation ('org.controlsfx:controlsfx:11.1.0') {
         exclude group: 'org.openjfx', module: '*'
     }
 

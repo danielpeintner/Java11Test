@@ -301,9 +301,7 @@ public class HelloFX extends Application {
 
         HyperlinkLabel hyperlinkLabel = new HyperlinkLabel("[Link]");
         hyperlinkLabel.setOnAction(event -> {
-            Hyperlink link = (Hyperlink)event.getSource();
-            final String str = link == null ? "" : link.getText();
-            if ("Link".equals(str)) {
+            if (event.getSource() == hyperlinkLabel) {
                 Project p = new Project();
                 p.setInformation("test");
                 System.out.println("Link clicked: " + p.toString());

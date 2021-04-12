@@ -4,7 +4,7 @@
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.9'
-    id 'org.beryx.runtime' version '1.12.2'
+    id 'org.beryx.runtime' version '1.12.4'
     // id 'org.unbroken-dome.xjc' version '1.4.3'
     id 'org.unbroken-dome.xjc' version '2.0.0' // https://github.com/unbroken-dome/gradle-xjc-plugin
 }
@@ -62,7 +62,7 @@ xjc {
     // srcDirName = 'src/main/resources'
 }
 
-version = '21.04.09'
+version = '21.04.12'
 def company = 'My Company'
 
 mainClassName = "com.example.hellofx.Launcher"

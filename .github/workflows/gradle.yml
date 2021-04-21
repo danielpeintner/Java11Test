@@ -10,7 +10,8 @@ on:
   pull_request:
     branches:
       - non-modular
-
+  workflow_dispatch:
+    # manuel trigger
 jobs:
   build:
     runs-on: ${{ matrix.os }}

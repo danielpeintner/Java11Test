@@ -10,7 +10,8 @@ on:
   pull_request:
     branches:
       - non-modular
-
+  workflow_dispatch:
+    # manuel trigger
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -47,18 +48,22 @@ jobs:
       with:
         name: hello-fx-jdk${{ matrix.java }}-${{ matrix.os }}-exe
         path: build/jpackage/*.exe
+        retention-days: 30
     - name: Upload MSI as an artifact
       uses: actions/upload-artifact@v2
       with:
         name: hello-fx-jdk${{ matrix.java }}-${{ matrix.os }}-msi
         path: build/jpackage/*.msi
+        retention-days: 30
     - name: Upload DEB as an artifact
       uses: actions/upload-artifact@v2
       with:
         name: hello-fx-jdk${{ matrix.java }}-${{ matrix.os }}-deb
         path: build/jpackage/*.deb
+        retention-days: 30
     - name: Upload RPM as an artifact
       uses: actions/upload-artifact@v2
       with:
         name: hello-fx-jdk${{ matrix.java }}-${{ matrix.os }}-rpm
         path: build/jpackage/*.rpm
+        retention-days: 30

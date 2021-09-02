@@ -31,9 +31,11 @@ dependencies {
     implementation 'org.xmlunit:xmlunit-core:2.8.1'
     implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.3'
     implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.3'
+    implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
 
     // test dependencies
-    testImplementation group: 'junit', name: 'junit', version: '4.13'
+    testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
+    testImplementation 'de.sandec:JMemoryBuddy:0.5.1'
 }
 
 repositories {
@@ -41,7 +43,7 @@ repositories {
 }
 
 javafx {
-    version = '16' // '14.0.2.1'
+    version = '17-ea+16' // '16' // '14.0.2.1'
     modules = ['javafx.controls']
 }
 
@@ -78,7 +80,7 @@ runtime {
         installerName = applicationName
         // Set the environment property BADASS_JLINK_JPACKAGE_HOME or explicitly configure the below property
         def os = org.gradle.internal.os.OperatingSystem.current()
-        if(os.macOsX) {
+        /* if(os.macOsX) {
             // jpackageHome = '/Library/Java/JavaVirtualMachines/adoptopenjdk-16.jdk/Contents/Home'
             jpackageHome = '/Library/Java/JavaVirtualMachines/jdk-17-b-32.jdk/Contents/Home'
         } else if(os.windows) {
@@ -86,7 +88,7 @@ runtime {
         } else {
             // Linux
             jpackageHome = '/usr/lib/jvm/jdk-16'
-        }
+        } */
         jvmArgs = []
         installerOptions = [
                 // '--file-associations', 'src/main/resources/associations.properties',
@@ -97,7 +99,7 @@ runtime {
         if(os.macOsX) {
             imageOptions = ['--icon', 'src/main/deploy/package/macosx/hello.icns']
             installerOptions += [
-                '--mac-sign',
+                // '--mac-sign',
                 // '--mac-signing-key-user-name', System.getenv('SIGNING_KEY_USER_NAME'),
                 // '--mac-signing-keychain', System.getenv('SIGNING_KEYCHAIN_PATH')
             ]

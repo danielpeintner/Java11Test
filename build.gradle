@@ -102,7 +102,7 @@ runtime {
                 '--copyright', company,
         ]
         if(os.macOsX) {
-            imageOptions = ['--icon', 'src/main/deploy/package/macosx/hello.icns']
+            imageOptions = ['--mac-sign', '--icon', 'src/main/deploy/package/macosx/hello.icns']
             installerOptions += [
                 // '--mac-sign',
                 // '--mac-signing-key-user-name', System.getenv('SIGNING_KEY_USER_NAME'),

@@ -52,7 +52,7 @@ java {
 }
 
 javafx {
-    version = '17-ea+16' // '16' // '14.0.2.1'
+    version = '17' // '16' // '14.0.2.1'
     modules = ['javafx.controls']
 }
 

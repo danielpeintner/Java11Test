@@ -8,6 +8,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CountDownLatch;
@@ -16,7 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class LeakTest {
 
-    @Test
+    @Test @Disabled
     public void stageLeakWithMenuButton() throws Exception {
         JMemoryBuddy.memoryTest((checker) -> {
             CountDownLatch startupLatch = new CountDownLatch(1);

@@ -4,20 +4,20 @@
 
 plugins {
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.10'
-    id 'org.beryx.runtime' version '1.12.5'
+    id 'org.openjfx.javafxplugin' version '0.0.14'
+    id 'org.beryx.runtime' version '1.12.7'
     id 'org.unbroken-dome.xjc' version '2.0.0'
 }
 
 dependencies {
     // ControlsFX
-    implementation ('org.controlsfx:controlsfx:11.1.0') {
-        // exclude group: 'org.openjfx', module: '*'
+    implementation('org.controlsfx:controlsfx:11.1.2') {
+        exclude group: 'org.openjfx', module: '*'
     }
 
     // Math
-    implementation 'com.udojava:EvalEx:2.4'
-    implementation 'com.ibm.icu:icu4j:65.1'
+    implementation 'com.udojava:EvalEx:2.7'
+    implementation 'com.ibm.icu:icu4j:73.2'
 
     // Apache POI
     implementation 'org.apache.poi:poi-ooxml:4.0.1'

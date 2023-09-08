@@ -62,6 +62,12 @@ configurations.xjcCatalogResolution  {
         attributes.attribute(key, rtCpAttributes.getAttribute(key))
     }
 }
+configurations.testXjcCatalogResolution  {
+    def rtCpAttributes = configurations.runtimeClasspath.attributes
+    rtCpAttributes.keySet().each { key ->
+        attributes.attribute(key, rtCpAttributes.getAttribute(key))
+    }
+}
 
 // e.g., configure manually
 /* configurations.xjcCatalogResolution  {

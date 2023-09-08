@@ -47,9 +47,30 @@ test {
     useJUnitPlatform()
 }
 
-java {
+/* not needed since non-modular project */
+/* java {
     modularity.inferModulePath.set(false)
+} */
+
+// org.openjfx.javafxplugin 0.1.0+ issues
+// see https://github.com/openjfx/javafx-gradle-plugin/pull/154
+
+// e.g., "copy" configuration from the runtimeClasspath over to xjcCatalogResolution
+configurations.xjcCatalogResolution  {
+    def rtCpAttributes = configurations.runtimeClasspath.attributes
+    rtCpAttributes.keySet().each { key ->
+        attributes.attribute(key, rtCpAttributes.getAttribute(key))
+    }
 }
+
+// e.g., configure manually
+/* configurations.xjcCatalogResolution  {
+    attributes {
+        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_RUNTIME))
+        attribute(OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE, objects.named(OperatingSystemFamily, "linux"))
+        attribute(MachineArchitecture.ARCHITECTURE_ATTRIBUTE, objects.named(MachineArchitecture, "x86-64"))
+    }
+} */
 
 javafx {
     version = '17' // '16' // '14.0.2.1'

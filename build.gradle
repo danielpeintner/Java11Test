@@ -80,7 +80,7 @@ configurations.testXjcCatalogResolution  {
 
 javafx {
     version = '17' // '16' // '14.0.2.1'
-    modules = ['javafx.controls']
+    modules = ['javafx.base', 'javafx.graphics', 'javafx.controls']
 }
 
 xjc {

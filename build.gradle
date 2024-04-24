@@ -1,5 +1,6 @@
-// Windows: set JAVA_HOME=C:\Program Files\Java\jdk-11.0.5+10
-// Windows: set JAVA_HOME=C:\Program Files\Java\jdk-16+36
+// Windows: set JAVA_HOME=C:\Program Files\Java\jdk-17
+// Windows: set JAVA_HOME=C:\Program Files\Java\jdk-21
+// Linux: export JAVA_HOME=/usr/lib/jvm/jdk-11.0.5+10
 // MacOS: export JAVA_HOME=`/usr/libexec/java_home -v 11`
 
 plugins {
@@ -82,7 +83,8 @@ configurations.testXjcCatalogResolution  {
 
 javafx {
     version = '22.0.1' // '16' // '14.0.2.1'
-    modules = ['javafx.base', 'javafx.graphics', 'javafx.controls']
+    // modules = ['javafx.base', 'javafx.graphics', 'javafx.controls']
+    modules = ['javafx.controls', 'javafx.swing', 'javafx.fxml', 'javafx.media', 'javafx.web']
 }
 
 xjc {

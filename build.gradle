@@ -6,7 +6,8 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
     id 'org.beryx.runtime' version '1.13.1'
-    id 'org.unbroken-dome.xjc' version '2.0.0'
+    // id 'org.unbroken-dome.xjc' version '2.0.0'
+    id 'com.github.bjornvester.xjc' version "1.8.1" // https://github.com/bjornvester/xjc-gradle-plugin
 }
 
 dependencies {
@@ -28,9 +29,11 @@ dependencies {
     // implementation 'com.lowagie:itext:2.1.7'
 
     // JAXB and XML Diff
-    implementation 'org.xmlunit:xmlunit-core:2.8.1'
-    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.3'
-    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.3'
+    // Note: XML Unit 2.8+ contains all necessary JAXB/Jakarta dependencies
+    // see https://github.com/xmlunit/xmlunit/releases/tag/v2.8.0
+    implementation 'org.xmlunit:xmlunit-core:2.9.1'
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.2' // javax.xml.bind.annotation
+    implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.5'
     implementation 'org.junit.jupiter:junit-jupiter:5.10.2'
 
     // test dependencies
@@ -54,9 +57,9 @@ test {
 
 // org.openjfx.javafxplugin 0.1.0+ issues
 // see https://github.com/openjfx/javafx-gradle-plugin/pull/154
-
 // e.g., "copy" configuration from the runtimeClasspath over to xjcCatalogResolution
-configurations.xjcCatalogResolution  {
+System.out.println("XXXXXXX: " + configurations);
+/*configurations.xjcCatalogResolution  {
     def rtCpAttributes = configurations.runtimeClasspath.attributes
     rtCpAttributes.keySet().each { key ->
         attributes.attribute(key, rtCpAttributes.getAttribute(key))
@@ -67,8 +70,7 @@ configurations.testXjcCatalogResolution  {
     rtCpAttributes.keySet().each { key ->
         attributes.attribute(key, rtCpAttributes.getAttribute(key))
     }
-}
-
+}*/
 // e.g., configure manually
 /* configurations.xjcCatalogResolution  {
     attributes {
@@ -84,7 +86,7 @@ javafx {
 }
 
 xjc {
-    // srcDirName = 'src/main/resources'
+    xsdDir.set(layout.projectDirectory.dir("src/main/schema")) // by default src/main/resource
 }
 
 version = '24.04.24'

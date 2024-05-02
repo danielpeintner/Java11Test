@@ -12,6 +12,11 @@ plugins {
     id 'com.github.bjornvester.xjc' version "1.8.1" // https://github.com/bjornvester/xjc-gradle-plugin
 }
 
+/* compileJava {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+} */
+
 dependencies {
     // ControlsFX
     implementation('org.controlsfx:controlsfx:11.2.1') {
@@ -91,6 +96,8 @@ javafx {
 
 xjc {
     xsdDir.set(layout.projectDirectory.dir("src/main/schema")) // by default src/main/resource
+    // options = ["-extension"]
+    options = ["-extension", "-encoding", "UTF-8"]
 }
 
 version = '24.04.24'

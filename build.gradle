@@ -101,13 +101,12 @@ xjc {
     options = ["-extension", "-encoding", "UTF-8"]
 }
 
-version = '24.04.24'
+version = '25.09.29'
 def company = 'My Company'
 
-mainClassName = "com.example.hellofx.Launcher"
-applicationName = 'hello-fx'
-
 application {
+    applicationName = 'hello-fx'
+    mainClass.set("com.example.hellofx.Launcher")
     applicationDefaultJvmArgs =  [
             // necessary for ControlsFX
             "--add-opens=javafx.base/com.sun.javafx.event=ALL-UNNAMED",
@@ -126,8 +125,8 @@ application {
 runtime {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     jpackage {
-        imageName = applicationName // "hello-fx"
-        installerName = applicationName
+        imageName = application.applicationName // "hello-fx"
+        installerName = application.applicationName
         // Set the environment property BADASS_JLINK_JPACKAGE_HOME or explicitly configure the below property
         def os = org.gradle.internal.os.OperatingSystem.current()
         /* if(os.macOsX) {

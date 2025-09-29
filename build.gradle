@@ -89,7 +89,7 @@ configurations.testXjcCatalogResolution  {
 } */
 
 javafx {
-    version = '22.0.1' // '16' // '14.0.2.1'
+    version = '25' // '22.0.1' // '16' // '14.0.2.1'
     // modules = ['javafx.base', 'javafx.graphics', 'javafx.controls']
     // Note: org.openjfx.javafxplugin@0.1.0 with badass-runtime-plugin relies on having all modules (transitive included) declared as "top-level" modules
     modules = ['javafx.base', 'javafx.graphics', 'javafx.controls', 'javafx.swing', 'javafx.fxml', 'javafx.media', 'javafx.web']

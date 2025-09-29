@@ -1,5 +1,6 @@
 // Windows: set JAVA_HOME=C:\Program Files\Java\jdk-17
 // Windows: set JAVA_HOME=C:\Program Files\Java\jdk-21
+// Windows: set JAVA_HOME=C:\Program Files\Java\jdk-25
 // Linux: export JAVA_HOME=/usr/lib/jvm/jdk-11.0.5+10
 // MacOS: export JAVA_HOME=`/usr/libexec/java_home -v 11`
 
@@ -7,9 +8,9 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
     // id 'org.javamodularity.moduleplugin' version '1.8.12'
-    id 'org.beryx.runtime' version '1.13.1'
+    id 'org.beryx.runtime' version '2.0.0-rc'
     // id 'org.unbroken-dome.xjc' version '2.0.0'
-    id 'com.github.bjornvester.xjc' version "1.8.1" // https://github.com/bjornvester/xjc-gradle-plugin
+    id 'com.github.bjornvester.xjc' version "1.8.2" // https://github.com/bjornvester/xjc-gradle-plugin
 }
 
 /* compileJava {
@@ -19,7 +20,7 @@ plugins {
 
 dependencies {
     // ControlsFX
-    implementation('org.controlsfx:controlsfx:11.2.1') {
+    implementation('org.controlsfx:controlsfx:11.2.2') {
         exclude group: 'org.openjfx', module: '*'
     }
 

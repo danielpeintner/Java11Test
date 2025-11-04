@@ -1,4 +1,4 @@
-package com.example.hellofx;
+package com.my_company.hellofx;
 
 import org.junit.jupiter.api.Test;
 

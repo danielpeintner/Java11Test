@@ -1,4 +1,4 @@
-package com.example.hellofx;
+package com.my_company.hellofx;
 
 import com.example.jaxb.Project;
 import com.ibm.icu.text.RuleBasedNumberFormat;

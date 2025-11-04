@@ -1,4 +1,4 @@
-package com.example.hellofx;
+package com.my_company.hellofx;
 
 import de.sandec.jmemorybuddy.JMemoryBuddy;
 import javafx.application.Platform;

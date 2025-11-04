@@ -7,7 +7,7 @@
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
-    id 'org.beryx.runtime' version '2.0.0-rc'
+    id 'org.beryx.runtime' version '2.0.0'
     // id 'org.unbroken-dome.xjc' version '2.0.0'
     id 'com.github.bjornvester.xjc' version "1.8.2" // https://github.com/bjornvester/xjc-gradle-plugin
 }
@@ -89,12 +89,12 @@ xjc {
     // options = ["-extension", "-encoding", "UTF-8"]
 }
 
-version = '25.09.29'
+version = '25.11.04'
 def company = 'My Company'
 
 application {
     applicationName = 'hello-fx'
-    mainClass.set("com.example.hellofx.Launcher")
+    mainClass.set("com.my_company.hellofx.Launcher")
     applicationDefaultJvmArgs =  [
             // necessary for JavaFX24+ (see https://gluonhq.com/products/javafx/openjfx-24-release-notes/)
             // "--enable-native-access=ALL-UNNAMED",
@@ -137,11 +137,13 @@ runtime {
                 '--copyright', company,
         ]
         if(os.macOsX) {
-            imageOptions = ['--mac-sign', '--icon', 'src/main/deploy/package/macosx/hello.icns']
+            imageOptions = ['--mac-sign', '--icon', 'src/main/deploy/package/macosx/hello.icns', '--mac-package-identifier', 'com.my-company.hellofx']
             installerOptions += [
-                // '--mac-sign',
-                // '--mac-signing-key-user-name', System.getenv('SIGNING_KEY_USER_NAME'),
-                // '--mac-signing-keychain', System.getenv('SIGNING_KEYCHAIN_PATH')
+                    // Note: --mac-package-identifier needs to be part of imageOptions
+                    // '--mac-package-identifier', 'com.my-company.hellofx',
+                    // '--mac-sign',
+                    // '--mac-signing-key-user-name', System.getenv('SIGNING_KEY_USER_NAME'),
+                    // '--mac-signing-keychain', System.getenv('SIGNING_KEYCHAIN_PATH')
             ]
         } else if(os.windows) {
             imageOptions = ['--icon', 'src/main/deploy/package/windows/hello.ico']

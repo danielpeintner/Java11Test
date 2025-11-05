@@ -2,7 +2,7 @@
 // Windows: set JAVA_HOME=C:\Program Files\Java\jdk-21
 // Windows: set JAVA_HOME=C:\Program Files\Java\jdk-25
 // Linux: export JAVA_HOME=/usr/lib/jvm/jdk-11.0.5+10
-// MacOS: export JAVA_HOME=`/usr/libexec/java_home -v 11`
+// MacOS: export JAVA_HOME=`/usr/libexec/java_home -v 21`
 
 plugins {
     id 'application'
@@ -66,7 +66,7 @@ java {
 }
 
 javafx {
-    version = '25' // '22.0.1' // '16' // '14.0.2.1'
+    version = '23' // '22.0.1' // '16' // '14.0.2.1'
     // modules = ['javafx.base', 'javafx.graphics', 'javafx.controls']
     // Note: org.openjfx.javafxplugin@0.1.0 with badass-runtime-plugin relies on having all modules (transitive included) declared as "top-level" modules
     modules = ['javafx.base', 'javafx.graphics', 'javafx.controls', 'javafx.swing', 'javafx.fxml', 'javafx.media', 'javafx.web']
@@ -141,7 +141,7 @@ runtime {
             installerOptions += [
                     // Note: --mac-package-identifier needs to be part of imageOptions
                     // '--mac-package-identifier', 'com.my-company.hellofx',
-                    // '--mac-sign',
+                    '--mac-sign',
                     // '--mac-signing-key-user-name', System.getenv('SIGNING_KEY_USER_NAME'),
                     // '--mac-signing-keychain', System.getenv('SIGNING_KEYCHAIN_PATH')
             ]

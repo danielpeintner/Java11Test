@@ -89,7 +89,7 @@ xjc {
     // options = ["-extension", "-encoding", "UTF-8"]
 }
 
-version = '25.09.29'
+version = '25.12.16'
 def company = 'My Company'
 
 application {
@@ -144,7 +144,7 @@ runtime {
                 // '--mac-signing-keychain', System.getenv('SIGNING_KEYCHAIN_PATH')
             ]
         } else if(os.windows) {
-            imageOptions = ['--icon', 'src/main/deploy/package/windows/hello.ico']
+            imageOptions = ['--icon', 'src/main/deploy/package/windows/coffee.ico']
             installerType = 'msi'
             installerOptions += [
                     '--win-per-user-install',

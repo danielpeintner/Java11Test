@@ -1,4 +1,4 @@
-package com.example.hellofx;
+package com.my_company.hellofx;
 
 @SuppressWarnings("unused")
 public class DataBean {

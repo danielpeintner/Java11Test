@@ -1,7 +1,7 @@
-package com.example.hellofx;
+package com.my_company.hellofx;
 
 public class Launcher {
     public static void main(String[] args) {
-        com.example.hellofx.HelloFX.main(args);
+        HelloFX.main(args);
     }
 }

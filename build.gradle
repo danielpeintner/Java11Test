@@ -2,12 +2,12 @@
 // Windows: set JAVA_HOME=C:\Program Files\Java\jdk-21
 // Windows: set JAVA_HOME=C:\Program Files\Java\jdk-25
 // Linux: export JAVA_HOME=/usr/lib/jvm/jdk-11.0.5+10
-// MacOS: export JAVA_HOME=`/usr/libexec/java_home -v 11`
+// MacOS: export JAVA_HOME=`/usr/libexec/java_home -v 21`
 
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
-    id 'org.beryx.runtime' version '2.0.0-rc'
+    id 'org.beryx.runtime' version '2.0.0'
     // id 'org.unbroken-dome.xjc' version '2.0.0'
     id 'com.github.bjornvester.xjc' version "1.8.2" // https://github.com/bjornvester/xjc-gradle-plugin
 }
@@ -94,7 +94,7 @@ def company = 'My Company'
 
 application {
     applicationName = 'hello-fx'
-    mainClass.set("com.example.hellofx.Launcher")
+    mainClass.set("com.my_company.hellofx.Launcher")
     applicationDefaultJvmArgs =  [
             // necessary for JavaFX24+ (see https://gluonhq.com/products/javafx/openjfx-24-release-notes/)
             // "--enable-native-access=ALL-UNNAMED",
@@ -137,12 +137,19 @@ runtime {
                 '--copyright', company,
         ]
         if(os.macOsX) {
-            imageOptions = ['--mac-sign', '--icon', 'src/main/deploy/package/macosx/hello.icns']
+            imageOptions = ['--mac-sign', '--icon', 'src/main/deploy/package/macosx/hello.icns', '--mac-package-identifier', 'com.my-company.hellofx']
             installerOptions += [
-                // '--mac-sign',
+                    // Note: --mac-package-identifier needs to be part of imageOptions
+                    // '--mac-package-identifier', 'com.my-company.hellofx',
+                    '--mac-sign',
                 // '--mac-signing-key-user-name', System.getenv('SIGNING_KEY_USER_NAME'),
                 // '--mac-signing-keychain', System.getenv('SIGNING_KEYCHAIN_PATH')
             ]
+            // 3 jpackage steps
+            // * /Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home/bin/jpackage --type app-image --input /Users/daniel/Documents/GitHub/Java11Test/build/install/hello-fx/lib --main-jar Java11Test-25.11.04.jar --main-class com.my_company.hellofx.Launcher --dest /Users/daniel/Documents/GitHub/Java11Test/build/jpackage --name hello-fx --app-version 25.11.04 --runtime-image /Users/daniel/Documents/GitHub/Java11Test/build/jre --java-options --add-opens=javafx.base/com.sun.javafx.event=ALL-UNNAMED --java-options --add-opens=javafx.base/com.sun.javafx.collections=ALL-UNNAMED --java-options --add-opens=javafx.base/com.sun.javafx.runtime=ALL-UNNAMED --java-options --add-opens=javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --java-options --add-opens=javafx.graphics/com.sun.javafx.scene.traversal=ALL-UNNAMED --java-options --add-opens=javafx.graphics/javafx.scene=ALL-UNNAMED --java-options --add-opens=javafx.controls/javafx.scene.control.skin=ALL-UNNAMED --java-options --add-opens=java.xml/com.sun.org.apache.xerces.internal.util=ALL-UNNAMED --mac-sign --icon src/main/deploy/package/macosx/hello.icns --mac-package-identifier com.my-company.hellofx
+            // * /Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home/bin/jpackage --type pkg --dest /Users/daniel/Documents/GitHub/Java11Test/build/jpackage --name hello-fx --app-version 25.11.04 --app-image /Users/daniel/Documents/GitHub/Java11Test/build/jpackage/hello-fx.app --app-version 25.11.04 --vendor "My Company" --copyright "My Company" --mac-sign
+            // * /Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home/bin/jpackage --type dmg --dest /Users/daniel/Documents/GitHub/Java11Test/build/jpackage --name hello-fx --app-version 25.11.04 --app-image /Users/daniel/Documents/GitHub/Java11Test/build/jpackage/hello-fx.app --app-version 25.11.04 --vendor "My Company" --copyright "My Company" --mac-sign
+
         } else if(os.windows) {
             imageOptions = ['--icon', 'src/main/deploy/package/windows/coffee.ico']
             installerType = 'msi'
